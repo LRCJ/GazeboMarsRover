@@ -1,39 +1,12 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="PandarQT">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="PandarQT_LiDAR">
   <xacro:property name="PI" value="3.1415926535897931" />
-  <xacro:macro name="PandarQT" params="*origin parent:=base_link name:=velodyne topic:=PandarQT_Data hz:=10 lasers:=64 samples:=2187 min_range:=0.1 max_range:=30.0 min_angle_h:=-180 max_angle_h:=180 min_angle_v:=-52.1 max_angle_v:=52.1 resolution:=0.02 noise:=0.008 visual:=true gpu:=false">
-
-    <joint name="joint_${parent}_${name}" type="fixed">
-      <xacro:insert_block name="origin" /> 
-      <parent link="${parent}"/>
-      <child link="${name}_Link"/>
-    </joint>
-
-    <link name="${name}_Link">
-      <inertial>
-        <mass value="0.47584" />
-        <origin xyz="9.4172E-09 -0.012924 0.00012666" rpy="${PI/2} 0 0" />
-        <inertia ixx="0.00040186" ixy="1.5748E-10" ixz="-1.4024E-10"
-          iyy="0.0003397" iyz="1.3527E-06" izz="0.00040759" />
-      </inertial>
-      <visual>
-        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
-        <geometry>
-          <mesh filename="package://MarsRover/meshes/LiDAR.STL" />
-        </geometry>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="${PI/2} 0 0" />
-        <geometry>
-          <mesh filename="package://MarsRover/meshes/LiDAR.STL" />
-        </geometry>
-      </collision>
-    </link>
+  <xacro:macro name="PandarQT" params="link:=base_link topic:=PandarQT_Data hz:=10 lasers:=64 samples:=2187 min_range:=0.1 max_range:=30.0 min_angle_h:=-180 max_angle_h:=180 min_angle_v:=-52.1 max_angle_v:=52.1 resolution:=0.02 noise:=0.008 visual:=true gpu:=false">
 
     <!-- Gazebo requires the velodyne_gazebo_plugins package -->
-    <gazebo reference="${name}_Link">
+    <gazebo reference="${link}">
       <xacro:if value="${gpu}">
-        <sensor type="gpu_ray" name="${name}_Sensor">
+        <sensor type="gpu_ray" name="${link}_Sensor">
           <pose>0 0 0 0 0 0</pose>
           <visualize>${visual}</visualize>
           <update_rate>${hz}</update_rate>
@@ -69,17 +42,18 @@
               <stddev>0.0</stddev>
             </noise>
           </ray>
-          <plugin name="gazebo_ros_laser_controller" filename="$(find MarsRover)/plugins/LidarPubData/build/libLidarPubData.so">
+          <plugin name="LidarPubData" filename="$(find mars_rover)/plugins/LidarPubData/build/libLidarPubData.so">
             <topicName>${topic}</topicName>
-            <frameName>${name}</frameName>
+            <frameName>${link}</frameName>
             <min_range>${min_range}</min_range>
             <max_range>${max_range}</max_range>
             <gaussianNoise>${noise}</gaussianNoise>
+            <min_intensity>0</min_intensity>
           </plugin>
         </sensor>
       </xacro:if>
       <xacro:unless value="${gpu}">
-        <sensor type="ray" name="${name}-HDL32E">
+        <sensor type="ray" name="${link}_Sensor">
           <pose>0 0 0 0 0 0</pose>
           <visualize>${visual}</visualize>
           <update_rate>${hz}</update_rate>
@@ -115,12 +89,13 @@
               <stddev>0.0</stddev>
             </noise>
           </ray>
-          <plugin name="gazebo_ros_laser_controller" filename="$(find MarsRover)/plugins/LidarPubData/build/libLidarPubData.so">
+          <plugin name="LidarPubData" filename="$(find mars_rover)/plugins/LidarPubData/build/libLidarPubData.so">
             <topicName>${topic}</topicName>
-            <frameName>${name}</frameName>
+            <frameName>${link}</frameName>
             <min_range>${min_range}</min_range>
             <max_range>${max_range}</max_range>
             <gaussianNoise>${noise}</gaussianNoise>
+            <min_intensity>0</min_intensity>
           </plugin>
         </sensor>
       </xacro:unless>

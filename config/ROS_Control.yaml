@@ -6,8 +6,8 @@ MarsRover:
 
   # Position Controllers ---------------------------------------
   joint1_position_controller:
-    type: velocity_controllers/JointVelocityController
-    joint: joint_LiDARSupport_LiDAR
+    type: position_controllers/JointPositionController
+    joint: joint_body_LeftMainRocker
     pid: {p: 10.0, i: 0.01, d: 10.0}
 #  gazebo_ros_control/pid_gains:
 #    joint_body_LeftMainRocker: {p: 1.0, i: 0.0, d: 1.0}

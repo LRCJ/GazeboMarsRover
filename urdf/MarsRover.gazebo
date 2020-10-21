@@ -1,10 +1,5 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
-	<xacro:property name="PI" value="3.141592654" />
-	<xacro:property name="samples" value="60" />
-	<xacro:property name="lasers" value="64" />
-	<xacro:property name="sensor_name" value="PandarQT" />
-	<xacro:property name="topic_name" value="PandarQT_Data" />
 	<gazebo reference="body">
 		<material>Gazebo/Gold</material>
 	</gazebo>
@@ -53,12 +48,6 @@
 	<gazebo reference="DiffBar">
 		<material>Gazebo/Green</material>
 	</gazebo>
-	<gazebo reference="LeftDiffBarLink">
-		<material>Gazebo/DarkGrey</material>
-	</gazebo>
-	<gazebo reference="RightDiffBarLink">
-		<material>Gazebo/DarkGrey</material>
-	</gazebo>
 	<gazebo reference="LiDARBodyCon">
 		<material>Gazebo/Grey</material>
 	</gazebo>
@@ -86,7 +75,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/LeftDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.STL</uri>
 	          </mesh>
 	        </geometry>
 	      </collision>
@@ -95,7 +84,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/LeftDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.STL</uri>
 	          </mesh>
 	        </geometry>
 	        <material>
@@ -124,7 +113,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/RightDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.STL</uri>
 	          </mesh>
 	        </geometry>
 	      </collision>
@@ -133,7 +122,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/RightDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.STL</uri>
 	          </mesh>
 	        </geometry>
 	        <material>
@@ -156,17 +145,11 @@
 			<parent>LeftDiffBarLink</parent>
 			<child>DiffBar</child>
 			<pose>0 -0.015 -0.3 0 0 0</pose>
-			<!--parent>DiffBar</parent>
-			<child>LeftDiffBarLink</child>
-			<pose>0.2 0 0 0 0 0</pose-->
 		</joint>
 		<joint name="joint_DiffBar_RightDiffBarLink" type="ball">
 			<parent>RightDiffBarLink</parent>
 			<child>DiffBar</child>
 			<pose>0 -0.015 0.3 0 0 0</pose>
-			<!--parent>DiffBar</parent>
-			<child>RightDiffBarLink</child>
-			<pose>0.2 0 0 0 0 0</pose-->
 		</joint>
 	</gazebo>
 
@@ -176,22 +159,29 @@
 			<robotNamespace>MarsRover</robotNamespace>
 			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 		</plugin-->
+		<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+		   <jointName>joint_body_DiffBar,joint_body_LeftMainRocker,joint_LeftMainRocker_LeftViceRocker,joint_LeftViceRocker_LeftMiddleWheel,joint_LeftViceRocker_LeftRearWheel,joint_LeftMainRocker_LeftFrontWheel,joint_body_RightMainRocker,joint_RightMainRocker_RightViceRocker,joint_RightViceRocker_RightMiddleWheel,joint_RightViceRocker_RightRearWheel,joint_RightMainRocker_RightFrontWheel</jointName>
+		   <updateRate>50.0</updateRate>
+		</plugin>
 		<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
-		<updateRate>100.0</updateRate>
-		<robotNamespace></robotNamespace>
-		<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
-		<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
-		<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
-		<rightRearJoint>joint_RightViceRocker_RightRearWheel</rightRearJoint>
-		<wheelSeparation>4</wheelSeparation>
-		<wheelDiameter>0.3</wheelDiameter>
-		<commandTopic>cmd_vel</commandTopic>
-		<odometryTopic>odom</odometryTopic>
-		<robotBaseFrame>base_footprint</robotBaseFrame>
-		<odometryFrame>odom</odometryFrame>
-		<torque>100</torque>
-		<topicName>cmd_vel</topicName>
-		<broadcastTF>1</broadcastTF>
+			<updateRate>100.0</updateRate>
+			<robotNamespace></robotNamespace>
+			<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
+			<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
+			<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
+			<rightRearJoint>joint_RightViceRocker_RightRearWheel</rightRearJoint>
+			<wheelSeparation>4</wheelSeparation>
+			<wheelDiameter>0.3</wheelDiameter>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryTopic>odom</odometryTopic>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<odometryFrame>odom</odometryFrame>
+			<torque>100</torque>
+			<topicName>cmd_vel</topicName>
+			<broadcastTF>1</broadcastTF>
+			<covariance_x>0.0001</covariance_x>
+			<covariance_y>0.0001</covariance_y>
+			<covariance_yaw>0.01</covariance_yaw>
 		</plugin>
 	</gazebo>
 </robot>

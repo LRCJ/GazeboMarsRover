@@ -11,7 +11,7 @@
   <arg name="debug" default="false" />
   <arg name="physics" default="ode"/>
   <arg name="verbose" default="true"/>
-  <arg name="world_name" default="$(find MarsRover)/urdf/MarsTerrain_1.world"/>
+  <arg name="world_name" default="$(find mars_rover)/urdf/MarsTerrain_1.world"/>
   <arg name="use_clock_frequency" default="false"/>
   <arg name="pub_clock_frequency" default="100"/>
   <arg name="enable_ros_network" default="true" />
@@ -22,8 +22,8 @@
   <arg name="gui_required" default="false"/>
 
   <!--set the parameters in ros paremeter server-->
-  <param name="robot_description" command="$(find xacro)/xacro.py $(find MarsRover)/urdf/MarsRover.xacro" />
-  <rosparam file="$(find MarsRover)/config/ROS_Control.yaml" command="load" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find mars_rover)/urdf/MarsRover.xacro" />
+  <!--rosparam file="$(find mars_rover)/config/ROS_Control.yaml" command="load" /-->
 
   <!-- set use_sim_time flag -->
   <param name="/use_sim_time" value="$(arg use_sim_time)"/>
@@ -60,7 +60,7 @@
   <!--node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" /-->
   
   <!--load rviz node-->
-  <!--node pkg="rviz" type="rviz" name="rviz" /-->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mars_rover)/rviz/rviz.rviz" />
 
   <!--This package allows you to publish the state of a robot to tf2 by topic joint_state-->
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
@@ -68,28 +68,5 @@
   </node>
 
   <!--load control manage node-->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="MarsRover" args="joint_state_controller joint1_position_controller"/>
+  <!--node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="MarsRover" args="joint_state_controller joint1_position_controller"/-->
 </launch>
-
-<!--origianl file exported from solidworks-->
-<!--launch>
-  <include
-    file="$(find gazebo_ros)/launch/empty_world.launch" />
-  <node
-    name="tf_footprint_base"
-    pkg="tf"
-    type="static_transform_publisher"
-    args="0 0 0 0 0 0 base_link base_footprint 40" />
-  <node
-    name="spawn_model"
-    pkg="gazebo_ros"
-    type="spawn_model"
-    args="-file $(find MarsRover)/urdf/MarsRover.urdf -urdf -model MarsRover"
-    output="screen" />
-  <node
-    name="fake_joint_calibration"
-    pkg="rostopic"
-    type="rostopic"
-    args="pub /calibrated std_msgs/Bool true" />
-</launch-->
