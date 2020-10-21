@@ -1,0 +1,918 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" 
+  name="MarsRover">
+  <xacro:include filename="$(find MarsRover)/urdf/MarsRover.gazebo" />
+  <xacro:property name="PI" value="3.141592654" />
+  <xacro:property name="LidarAngle" value="${0}" />
+  <xacro:property name="LidarHeight" value="-0.0" />
+  <link
+    name="body">
+    <inertial>
+      <origin
+        xyz="-0.000147897244928197 -0.0822271126898096 1.11022302462516E-16"
+        rpy="0 0 0" />
+      <mass
+        value="32.9286570826472" />
+      <inertia
+        ixx="4.47491142188154"
+        ixy="-0.000503480655802534"
+        ixz="1.31725686550942E-14"
+        iyy="9.29423854790981"
+        iyz="7.44971011585177E-16"
+        izz="7.39741952054995" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/body.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/body.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="DiffBar">
+    <inertial>
+      <origin
+        xyz="7.23369697475107E-10 -0.0223125966605722 3.3729640969149E-08"
+        rpy="0 0 0" />
+      <mass
+        value="1.49170112220708" />
+      <inertia
+        ixx="0.030385701616174"
+        ixy="-4.27358554206539E-11"
+        ixz="6.00528612798054E-07"
+        iyy="0.0300953010528317"
+        iyz="1.87976912025262E-08"
+        izz="0.000583955549724061" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/DiffBar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/DiffBar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_body_DiffBar"
+    type="continuous">
+    <origin
+      xyz="0.20043 -0.225 0"
+      rpy="0 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="DiffBar" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="LeftMainRocker">
+    <inertial>
+      <origin
+        xyz="0.194777234245267 -0.101638011239522 -0.0322190943393932"
+        rpy="0 0 0" />
+      <mass
+        value="2.31659033764537" />
+      <inertia
+        ixx="0.0253182901443958"
+        ixy="0.0763954336660846"
+        ixz="0.00562994284708994"
+        iyy="0.301511476413955"
+        iyz="-0.00212772758361841"
+        izz="0.322973812666095" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftMainRocker.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftMainRocker.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_body_LeftMainRocker"
+    type="continuous">
+    <origin
+      xyz="0 -0.155 -0.395"
+      rpy="0 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="LeftMainRocker" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="LeftViceRocker">
+    <inertial>
+      <origin
+        xyz="0.000324935586217618 -0.142828935520301 -0.00457781208829167"
+        rpy="0 0 0" />
+      <mass
+        value="1.70193743881046" />
+      <inertia
+        ixx="0.011640762472159"
+        ixy="-0.000234839301434703"
+        ixz="1.79349163947906E-06"
+        iyy="0.114866371685707"
+        iyz="-0.000788348560750385"
+        izz="0.1254823143192" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftViceRocker.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftViceRocker.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LeftMainRocker_LeftViceRocker"
+    type="continuous">
+    <origin
+      xyz="-0.40088 -0.023072 -0.055"
+      rpy="0 0 0" />
+    <parent
+      link="LeftMainRocker" />
+    <child
+      link="LeftViceRocker" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="LeftMiddleWheel">
+    <inertial>
+      <origin
+        xyz="0 -2.77555756156289E-17 1.66533453693773E-16"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445032"
+        ixy="-1.19260452263282E-17"
+        ixz="-8.56630017307201E-19"
+        iyy="0.0218761505445032"
+        iyz="4.7148329734938E-18"
+        izz="0.0405258063947127" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftMiddleWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftMiddleWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LeftViceRocker_LeftMiddleWheel"
+    type="continuous">
+    <origin
+      xyz="0.38804 -0.24313 -0.09"
+      rpy="0 0 0" />
+    <parent
+      link="LeftViceRocker" />
+    <child
+      link="LeftMiddleWheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="LeftRearWheel">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 5.55111512312578E-17"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445031"
+        ixy="-1.52170599454406E-17"
+        ixz="-1.27014873364989E-18"
+        iyy="0.0218761505445032"
+        iyz="1.03685045793585E-19"
+        izz="0.040525806394713" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftRearWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftRearWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LeftViceRocker_LeftRearWheel"
+    type="continuous">
+    <origin
+      xyz="-0.38693 -0.2449 -0.09"
+      rpy="0 0 0" />
+    <parent
+      link="LeftViceRocker" />
+    <child
+      link="LeftRearWheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="LeftFrontWheel">
+    <inertial>
+      <origin
+        xyz="0 8.32667268468867E-17 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445031"
+        ixy="1.11983361154303E-17"
+        ixz="1.57073225640767E-18"
+        iyy="0.0218761505445032"
+        iyz="1.17261152392734E-18"
+        izz="0.0405258063947128" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftFrontWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftFrontWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LeftMainRocker_LeftFrontWheel"
+    type="continuous">
+    <origin
+      xyz="0.75893 -0.27932 -0.145"
+      rpy="0 0 0" />
+    <parent
+      link="LeftMainRocker" />
+    <child
+      link="LeftFrontWheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <!--link
+    name="LeftDiffBarLink">
+    <inertial>
+      <origin
+        xyz="0.100844514587008 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.200751056745894" />
+      <inertia
+        ixx="1.70941578635533E-05"
+        ixy="1.00926628658576E-19"
+        ixz="4.58491019961146E-19"
+        iyy="0.00141233412869607"
+        iyz="1.74566677143738E-10"
+        izz="0.00141233526669787" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftDiffBarLink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LeftDiffBarLink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LeftMainRocker_DiffBarLink"
+    type="continuous">
+    <origin
+      xyz="-0.00040847 -0.084999 0.095"
+      rpy="0 0 0" />
+    <parent
+      link="LeftMainRocker" />
+    <child
+      link="LeftDiffBarLink" />
+    <axis
+      xyz="1 0 0" />
+  </joint-->
+  <link
+    name="RightMainRocker">
+    <inertial>
+      <origin
+        xyz="0.194763676146297 -0.101665854830299 0.0322193239500774"
+        rpy="0 0 0" />
+      <mass
+        value="2.31657690221752" />
+      <inertia
+        ixx="0.0253400528535679"
+        ixy="0.0764346880668326"
+        ixz="-0.00562954329148165"
+        iyy="0.301489394311443"
+        iyz="0.0021285325929566"
+        izz="0.322973476972127" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightMainRocker.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightMainRocker.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_body_RightMainRocker"
+    type="continuous">
+    <origin
+      xyz="0 -0.155 0.395"
+      rpy="0 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="RightMainRocker" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="RightViceRocker">
+    <inertial>
+      <origin
+        xyz="-3.74727935245119E-05 -0.142829300218082 0.00457781208829156"
+        rpy="0 0 0" />
+      <mass
+        value="1.70193743881046" />
+      <inertia
+        ixx="0.0116402353185612"
+        ixy="2.70826203635347E-05"
+        ixz="2.06832199209221E-07"
+        iyy="0.114866898839305"
+        iyz="0.000788350573710642"
+        izz="0.1254823143192" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightViceRocker.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightViceRocker.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_RightMainRocker_RightViceRocker"
+    type="continuous">
+    <origin
+      xyz="-0.40088 -0.023015 0.055"
+      rpy="0 0 0" />
+    <parent
+      link="RightMainRocker" />
+    <child
+      link="RightViceRocker" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="RightMiddleWheel">
+    <inertial>
+      <origin
+        xyz="5.55111512312578E-17 2.77555756156289E-17 4.44089209850063E-16"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445029"
+        ixy="-1.9031573010273E-18"
+        ixz="-2.39487588733922E-19"
+        iyy="0.0218761505445029"
+        iyz="-7.04547948608855E-19"
+        izz="0.0405258063947124" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightMiddleWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightMiddleWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_RightViceRocker_RightMiddleWheel"
+    type="continuous">
+    <origin
+      xyz="0.38742 -0.24412 0.09"
+      rpy="0 0 0" />
+    <parent
+      link="RightViceRocker" />
+    <child
+      link="RightMiddleWheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="RightRearWheel">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0 2.22044604925031E-16"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445032"
+        ixy="5.55887981239045E-18"
+        ixz="-3.29127182449659E-18"
+        iyy="0.0218761505445032"
+        iyz="1.63702825142094E-18"
+        izz="0.0405258063947131" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightRearWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightRearWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_RightViceRocker_RightRearWheel"
+    type="continuous">
+    <origin
+      xyz="-0.38755 -0.24391 0.09"
+      rpy="0 0 0" />
+    <parent
+      link="RightViceRocker" />
+    <child
+      link="RightRearWheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="RightFrontWheel">
+    <inertial>
+      <origin
+        xyz="2.22044604925031E-16 2.77555756156289E-17 2.22044604925031E-16"
+        rpy="0 0 0" />
+      <mass
+        value="2.46800319485063" />
+      <inertia
+        ixx="0.0218761505445032"
+        ixy="-6.61440556312683E-18"
+        ixz="-6.72132346636618E-19"
+        iyy="0.0218761505445033"
+        iyz="6.45026917654287E-18"
+        izz="0.0405258063947131" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightFrontWheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightFrontWheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_RightMainRocker_RightFrontWheel"
+    type="continuous">
+    <origin
+      xyz="0.75889 -0.27943 0.145"
+      rpy="0 0 0" />
+    <parent
+      link="RightMainRocker" />
+    <child
+      link="RightFrontWheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <!--link
+    name="RightDiffBarLink">
+    <inertial>
+      <origin
+        xyz="0.100844514587009 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.200751056745894" />
+      <inertia
+        ixx="1.70941578635533E-05"
+        ixy="1.11352990696024E-19"
+        ixz="-5.32413605318364E-19"
+        iyy="0.00141233523239964"
+        iyz="-2.61397407586746E-10"
+        izz="0.0014123341629943" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightDiffBarLink.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/RightDiffBarLink.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_RightMainRocker_DiffBarLink"
+    type="continuous">
+    <origin
+      xyz="-0.00042056 -0.084999 -0.095"
+      rpy="0 0 0" />
+    <parent
+      link="RightMainRocker" />
+    <child
+      link="RightDiffBarLink" />
+    <axis
+      xyz="1 0 0" />
+  </joint-->
+  <link
+    name="LiDARBodyCon">
+    <inertial>
+      <origin
+        xyz="-0.014583 -0.0040905 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.2293" />
+      <inertia
+        ixx="0.00036659"
+        ixy="-4.7613E-05"
+        ixz="5.528E-20"
+        iyy="0.00053318"
+        iyz="2.5048E-20"
+        izz="0.00023526" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDARBodyCon.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDARBodyCon.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_body_LiDARCon"
+    type="fixed">
+    <origin
+      xyz="0.6475 ${0.295+LidarHeight} 0"
+      rpy="0 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="LiDARBodyCon" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="LiDARSupport">
+    <inertial>
+      <origin
+        xyz="-0.03997 -7.7716E-16 1.1102E-16"
+        rpy="0 0 0" />
+      <mass
+        value="0.23629" />
+      <inertia
+        ixx="0.00032757"
+        ixy="-8.0625E-22"
+        ixz="1.1215E-19"
+        iyy="0.00047027"
+        iyz="1.38E-21"
+        izz="0.00014519" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.0825 0.004 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDARSupport.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.89804 0.91765 0.92941 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.0825 0.004 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDARSupport.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LiDARBodyCon_LiDARSupport"
+    type="fixed">
+    <origin
+      xyz="0.035 0.009 0"
+      rpy="0 0 ${LidarAngle}" />
+    <parent
+      link="LiDARBodyCon" />
+    <child
+      link="LiDARSupport" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="${-PI/2}"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="LiDAR">
+    <inertial>
+      <origin
+        xyz="9.4172E-09 -0.012924 0.00012666"
+        rpy="0 0 0" />
+      <mass
+        value="0.47584" />
+      <inertia
+        ixx="0.00040186"
+        ixy="1.5748E-10"
+        ixz="-1.4024E-10"
+        iyy="0.0003397"
+        iyz="1.3527E-06"
+        izz="0.00040759" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDAR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.69804 0.69804 0.69804 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://MarsRover/meshes/LiDAR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_LiDARSupport_LiDAR"
+    type="fixed">
+    <origin
+      xyz="-0.0375 0.0544 0"
+      rpy="0 0 0" />
+    <parent
+      link="LiDARSupport" />
+    <child
+      link="LiDAR" />
+    <!--axis
+      xyz="0 1 0" /-->
+  </joint>
+
+  <!--TRANSMISSION-->
+  <!--transmission name="simple_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint_LiDARSupport_LiDAR">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="LMR_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </actuator>
+  </transmission-->
+
+
+</robot>

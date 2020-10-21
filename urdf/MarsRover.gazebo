@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+	<xacro:property name="PI" value="3.141592654" />
+	<xacro:property name="samples" value="60" />
+	<xacro:property name="lasers" value="64" />
+	<xacro:property name="sensor_name" value="PandarQT" />
+	<xacro:property name="topic_name" value="PandarQT_Data" />
+	<gazebo reference="body">
+		<material>Gazebo/Gold</material>
+	</gazebo>
+	<gazebo reference="LeftMainRocker">
+		<material>Gazebo/Red</material>
+	</gazebo>
+	<gazebo reference="RightMainRocker">
+		<material>Gazebo/Red</material>
+	</gazebo>
+	<gazebo reference="LeftViceRocker">
+		<material>Gazebo/Blue</material>
+	</gazebo>
+	<gazebo reference="RightViceRocker">
+		<material>Gazebo/Blue</material>
+	</gazebo>
+	<gazebo reference="LeftFrontWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="LeftMiddleWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="LeftRearWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="RightFrontWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="RightMiddleWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="RightRearWheel">
+		<material>Gazebo/Grey</material>
+		<mu1>0.3</mu1>
+		<mu2>0.3</mu2>
+	</gazebo>
+	<gazebo reference="DiffBar">
+		<material>Gazebo/Green</material>
+	</gazebo>
+	<gazebo reference="LeftDiffBarLink">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+	<gazebo reference="RightDiffBarLink">
+		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+	<gazebo reference="LiDARBodyCon">
+		<material>Gazebo/Grey</material>
+	</gazebo>
+	<gazebo reference="LiDARSupport">
+		<material>Gazebo/Grey</material>
+	</gazebo>
+	<gazebo reference="LiDAR">
+		<sensor type="ray" name="${sensor_name}">
+			<pose>0 0 0 0 0 0</pose>
+			<visualize>true</visualize>
+			<update_rate>10</update_rate>
+			<ray>
+				<scan>
+					<!--reference to LiDAR link-->
+					<!--Perpendicular to Z axis,in XY plane-->
+					<horizontal>
+						<samples>${lasers}</samples>
+						<resolution>1</resolution>
+						<min_angle>-${52.1/180.0*PI}</min_angle>
+						<max_angle>${52.1/180.0*PI}</max_angle>
+					</horizontal>
+					<!--Perpendicular to Y axis,in XZ plane-->
+					<!--use <vertical> may cause higher memory usage!-->
+					<vertical>
+						<samples>${samples}</samples>
+						<resolution>1</resolution>
+						<min_angle>-${PI}</min_angle>
+						<!--max_angle>${2*PI*(samples-1)/samples}</max_angle-->
+						<max_angle>${PI}</max_angle>
+					</vertical>
+				</scan>
+				<range>
+					<min>0.1</min>
+					<max>30.0</max>
+					<resolution>0.02</resolution>
+				</range>
+	            <noise>
+	              <type>gaussian</type>
+	              <mean>0.0</mean>
+	              <stddev>0.0</stddev>
+	            </noise>
+			</ray>
+			<!--plugin name="gazebo_ros_laser_controller" filename="/home/liaoren/Desktop/velodyne_sim/devel/lib/libgazebo_ros_velodyne_laser.so">
+				<topicName>${topic_name}</topicName>
+				<frameName>${sensor_name}</frameName>
+				<min_range>0.1</min_range>
+				<max_range>30.0</max_range>
+				<gaussianNoise>0.008</gaussianNoise>
+			</plugin-->
+			<!--plugin name="Lidar" filename="libgazebo_ros_laser.so">
+				<topicName>/PandarQT_Data</topicName>
+				<frameName>/PandarQT</frameName>
+			</plugin-->
+		</sensor>
+	</gazebo>
+	<gazebo>
+		<!--LINKs-->
+	    <link name='LeftDiffBarLink'>
+	      <pose frame=''>-0.000408 -0.239999 -0.3 0 -0 0</pose>
+	      <inertial>
+	        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+	        <mass>0.200751</mass>
+	        <inertia>
+	          <ixx>1.70942e-05</ixx>
+	          <ixy>1.00927e-19</ixy>
+	          <ixz>4.58491e-19</ixz>
+	          <iyy>0.00141233</iyy>
+	          <iyz>1.74567e-10</iyz>
+	          <izz>0.00141234</izz>
+	        </inertia>
+	      </inertial>
+	      <collision name='LeftDiffBarLink_collision'>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
+	        <geometry>
+	          <mesh>
+	            <scale>1 1 1</scale>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/LeftDiffBarLink.STL</uri>
+	          </mesh>
+	        </geometry>
+	      </collision>
+	      <visual name='LeftDiffBarLink_visual'>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
+	        <geometry>
+	          <mesh>
+	            <scale>1 1 1</scale>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/LeftDiffBarLink.STL</uri>
+	          </mesh>
+	        </geometry>
+	        <material>
+	        	<script>
+	        		<name>Gazebo/DarkGrey</name>
+	        	</script>
+	        </material>
+	      </visual>
+	    </link>
+	    <link name='RightDiffBarLink'>
+	      <pose frame=''>-0.000421 -0.239999 0.3 0 -0 0</pose>
+	      <inertial>
+	        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+	        <mass>0.200751</mass>
+	        <inertia>
+	          <ixx>1.70942e-05</ixx>
+	          <ixy>1.11353e-19</ixy>
+	          <ixz>-5.32414e-19</ixz>
+	          <iyy>0.00141234</iyy>
+	          <iyz>-2.61397e-10</iyz>
+	          <izz>0.00141233</izz>
+	        </inertia>
+	      </inertial>
+	      <collision name='RightDiffBarLink_collision'>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
+	        <geometry>
+	          <mesh>
+	            <scale>1 1 1</scale>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/RightDiffBarLink.STL</uri>
+	          </mesh>
+	        </geometry>
+	      </collision>
+	      <visual name='RightDiffBarLink_visual'>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
+	        <geometry>
+	          <mesh>
+	            <scale>1 1 1</scale>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/MarsRover/meshes/RightDiffBarLink.STL</uri>
+	          </mesh>
+	        </geometry>
+	        <material>
+	        	<script>
+	        		<name>Gazebo/DarkGrey</name>
+	        	</script>
+	        </material>
+	      </visual>
+	    </link>
+	    <!--JOINTs-->
+		<joint name="joint_LeftMainRocker_DiffBarLink" type="ball">
+			<parent>LeftMainRocker</parent>
+			<child>LeftDiffBarLink</child>
+		</joint>
+		<joint name="joint_RightMainRocker_DiffBarLink" type="ball">
+			<parent>RightMainRocker</parent>
+			<child>RightDiffBarLink</child>
+		</joint>
+		<joint name="joint_DiffBar_LeftDiffBarLink" type="ball">
+			<parent>LeftDiffBarLink</parent>
+			<child>DiffBar</child>
+			<pose>0 -0.015 -0.3 0 0 0</pose>
+			<!--parent>DiffBar</parent>
+			<child>LeftDiffBarLink</child>
+			<pose>0.2 0 0 0 0 0</pose-->
+		</joint>
+		<joint name="joint_DiffBar_RightDiffBarLink" type="ball">
+			<parent>RightDiffBarLink</parent>
+			<child>DiffBar</child>
+			<pose>0 -0.015 0.3 0 0 0</pose>
+			<!--parent>DiffBar</parent>
+			<child>RightDiffBarLink</child>
+			<pose>0.2 0 0 0 0 0</pose-->
+		</joint>
+	</gazebo>
+
+	<!--Plugins-->
+	<gazebo>
+		<!--plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>MarsRover</robotNamespace>
+			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+		</plugin-->
+		<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+		<updateRate>100.0</updateRate>
+		<robotNamespace></robotNamespace>
+		<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
+		<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
+		<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
+		<rightRearJoint>joint_RightViceRocker_RightRearWheel</rightRearJoint>
+		<wheelSeparation>4</wheelSeparation>
+		<wheelDiameter>0.3</wheelDiameter>
+		<commandTopic>cmd_vel</commandTopic>
+		<odometryTopic>odom</odometryTopic>
+		<robotBaseFrame>base_footprint</robotBaseFrame>
+		<odometryFrame>odom</odometryFrame>
+		<torque>100</torque>
+		<topicName>cmd_vel</topicName>
+		<broadcastTF>1</broadcastTF>
+		</plugin>
+	</gazebo>
+</robot>

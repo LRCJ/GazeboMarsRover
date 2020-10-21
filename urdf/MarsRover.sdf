@@ -1,0 +1,761 @@
+<sdf version='1.6'>
+  <model name='MarsRover'>
+    <link name='body'>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.00423 -0.079647 0 0 -0 0</pose>
+        <mass>33.158</mass>
+        <inertia>
+          <ixx>4.50698</ixx>
+          <ixy>-0.0543417</ixy>
+          <ixz>1.31726e-14</ixz>
+          <iyy>9.38603</iyy>
+          <iyz>7.45016e-16</iyz>
+          <izz>7.52062</izz>
+        </inertia>
+      </inertial>
+      <collision name='body_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/body.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='body_fixed_joint_lump__LiDARBodyCon_collision_1'>
+        <pose frame=''>0.6475 0.295 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDARBodyCon.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='body_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/body.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='body_fixed_joint_lump__LiDARBodyCon_visual_1'>
+        <pose frame=''>0.6475 0.295 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDARBodyCon.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <link name='DiffBar'>
+      <pose frame=''>0.20043 -0.225 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 -0.022313 0 0 -0 0</pose>
+        <mass>1.4917</mass>
+        <inertia>
+          <ixx>0.0303857</ixx>
+          <ixy>-4.27359e-11</ixy>
+          <ixz>6.00529e-07</ixz>
+          <iyy>0.0300953</iyy>
+          <iyz>1.87977e-08</iyz>
+          <izz>0.000583956</izz>
+        </inertia>
+      </inertial>
+      <collision name='DiffBar_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/DiffBar.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='DiffBar_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/DiffBar.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_body_DiffBar' type='revolute'>
+      <child>DiffBar</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftMainRocker'>
+      <pose frame=''>0 -0.155 -0.395 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.194777 -0.101638 -0.032219 0 -0 0</pose>
+        <mass>2.31659</mass>
+        <inertia>
+          <ixx>0.0253183</ixx>
+          <ixy>0.0763954</ixy>
+          <ixz>0.00562994</ixz>
+          <iyy>0.301511</iyy>
+          <iyz>-0.00212773</iyz>
+          <izz>0.322974</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftMainRocker_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftMainRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftMainRocker_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftMainRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_body_LeftMainRocker' type='revolute'>
+      <child>LeftMainRocker</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftDiffBarLink'>
+      <pose frame=''>-0.000408 -0.239999 -0.3 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+        <mass>0.200751</mass>
+        <inertia>
+          <ixx>1.70942e-05</ixx>
+          <ixy>1.00927e-19</ixy>
+          <ixz>4.58491e-19</ixz>
+          <iyy>0.00141233</iyy>
+          <iyz>1.74567e-10</iyz>
+          <izz>0.00141234</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftDiffBarLink_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftDiffBarLink.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftDiffBarLink_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftDiffBarLink.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LeftMainRocker_DiffBarLink' type='revolute'>
+      <child>LeftDiffBarLink</child>
+      <parent>LeftMainRocker</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftFrontWheel'>
+      <pose frame=''>0.75893 -0.434323 -0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>1.0907e-17</ixy>
+          <ixz>1.13672e-18</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>4.20718e-18</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftFrontWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftFrontWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftFrontWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftFrontWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LeftMainRocker_LeftFrontWheel' type='revolute'>
+      <child>LeftFrontWheel</child>
+      <parent>LeftMainRocker</parent>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftViceRocker'>
+      <pose frame=''>-0.400877 -0.178072 -0.45 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.000325 -0.142829 -0.004578 0 -0 0</pose>
+        <mass>1.70194</mass>
+        <inertia>
+          <ixx>0.0116408</ixx>
+          <ixy>-0.000234839</ixy>
+          <ixz>1.79349e-06</ixz>
+          <iyy>0.114866</iyy>
+          <iyz>-0.000788349</iyz>
+          <izz>0.125482</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftViceRocker_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftViceRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftViceRocker_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftViceRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LeftMainRocker_LeftViceRocker' type='revolute'>
+      <child>LeftViceRocker</child>
+      <parent>LeftMainRocker</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftMiddleWheel'>
+      <pose frame=''>-0.012834 -0.421204 -0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 -0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>-1.19256e-17</ixy>
+          <ixz>-8.5663e-19</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>4.71483e-18</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftMiddleWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftMiddleWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftMiddleWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftMiddleWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LeftViceRocker_LeftMiddleWheel' type='revolute'>
+      <child>LeftMiddleWheel</child>
+      <parent>LeftViceRocker</parent>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LeftRearWheel'>
+      <pose frame=''>-0.787809 -0.422967 -0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>-5.75837e-18</ixy>
+          <ixz>-1.27696e-18</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>1.0905e-19</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='LeftRearWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftRearWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LeftRearWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LeftRearWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joit_LeftViceRocker_LeftRearWheel' type='revolute'>
+      <child>LeftRearWheel</child>
+      <parent>LeftViceRocker</parent>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='LiDARSupport'>
+      <pose frame=''>0.6 0.308 0 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.04418 0.023714 8.5e-05 0 -0 0</pose>
+        <mass>0.71213</mass>
+        <inertia>
+          <ixx>0.00100104</ixx>
+          <ixy>-1.61748e-05</ixy>
+          <ixz>-4.95355e-08</ixz>
+          <iyy>0.000810936</iyy>
+          <iyz>5.23263e-07</iyz>
+          <izz>0.00082535</izz>
+        </inertia>
+      </inertial>
+      <collision name='LiDARSupport_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDARSupport.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <collision name='LiDARSupport_fixed_joint_lump__LiDAR_collision_1'>
+        <pose frame=''>0.045 0.0504 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDAR.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='LiDARSupport_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDARSupport.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <visual name='LiDARSupport_fixed_joint_lump__LiDAR_visual_1'>
+        <pose frame=''>0.045 0.0504 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/LiDAR.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LiDARBodyCon_LiDARSupport' type='revolute'>
+      <child>LiDARSupport</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>0 0 -1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0</upper>
+          <effort>0</effort>
+          <velocity>0</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightMainRocker'>
+      <pose frame=''>0 -0.155 0.395 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.194764 -0.101666 0.032219 0 -0 0</pose>
+        <mass>2.31658</mass>
+        <inertia>
+          <ixx>0.0253401</ixx>
+          <ixy>0.0764347</ixy>
+          <ixz>-0.00562954</ixz>
+          <iyy>0.301489</iyy>
+          <iyz>0.00212853</iyz>
+          <izz>0.322973</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightMainRocker_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightMainRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightMainRocker_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightMainRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_body_RightMainRocker' type='revolute'>
+      <child>RightMainRocker</child>
+      <parent>body</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightFrontWheel'>
+      <pose frame=''>0.75889 -0.434431 0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>-2.6483e-18</ixy>
+          <ixz>-7.75188e-19</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>6.00692e-18</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightFrontWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightFrontWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightFrontWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightFrontWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_LeftMainRocker_RightFrontWheel' type='revolute'>
+      <child>RightFrontWheel</child>
+      <parent>RightMainRocker</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightDiffBarLink'>
+      <pose frame=''>-0.000421 -0.239999 0.3 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+        <mass>0.200751</mass>
+        <inertia>
+          <ixx>1.70942e-05</ixx>
+          <ixy>1.11353e-19</ixy>
+          <ixz>-5.32414e-19</ixz>
+          <iyy>0.00141234</iyy>
+          <iyz>-2.61397e-10</iyz>
+          <izz>0.00141233</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightDiffBarLink_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightDiffBarLink.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightDiffBarLink_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightDiffBarLink.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_RightMainRocker_DiffBarLink' type='revolute'>
+      <child>RightDiffBarLink</child>
+      <parent>RightMainRocker</parent>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightViceRocker'>
+      <pose frame=''>-0.40088 -0.178015 0.45 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>-3.7e-05 -0.142829 0.004578 0 -0 0</pose>
+        <mass>1.70194</mass>
+        <inertia>
+          <ixx>0.0116402</ixx>
+          <ixy>2.70826e-05</ixy>
+          <ixz>2.06832e-07</ixz>
+          <iyy>0.114867</iyy>
+          <iyz>0.000788351</iyz>
+          <izz>0.125482</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightViceRocker_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightViceRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightViceRocker_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightViceRocker.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_RightMainRocker_RightViceRocker' type='revolute'>
+      <child>RightViceRocker</child>
+      <parent>RightMainRocker</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightMiddleWheel'>
+      <pose frame=''>-0.013455 -0.422131 0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>-1.86955e-18</ixy>
+          <ixz>-5.65948e-19</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>-7.01089e-19</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightMiddleWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightMiddleWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightMiddleWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightMiddleWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_RightViceRocker_RightMiddleWheel' type='revolute'>
+      <child>RightMiddleWheel</child>
+      <parent>RightViceRocker</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+    <link name='RightRearWheel'>
+      <pose frame=''>-0.788433 -0.421928 0.54 0 -0 0</pose>
+      <inertial>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <mass>2.468</mass>
+        <inertia>
+          <ixx>0.0218762</ixx>
+          <ixy>-8.49441e-18</ixy>
+          <ixz>-2.20693e-18</ixz>
+          <iyy>0.0218762</iyy>
+          <iyz>-5.29188e-19</iyz>
+          <izz>0.0405258</izz>
+        </inertia>
+      </inertial>
+      <collision name='RightRearWheel_collision'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightRearWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='RightRearWheel_visual'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://MarsRover/meshes/RightRearWheel.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+    <joint name='joint_RightViceRocker_RightRearWheel' type='revolute'>
+      <child>RightRearWheel</child>
+      <parent>RightViceRocker</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-1e+16</lower>
+          <upper>1e+16</upper>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
+      </axis>
+    </joint>
+  </model>
+</sdf>
