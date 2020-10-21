@@ -848,7 +848,7 @@
       effort="0"
       velocity="0" />
   </joint>
-  <link
+  <!--link
     name="LiDAR">
     <inertial>
       <origin
@@ -898,9 +898,13 @@
       link="LiDARSupport" />
     <child
       link="LiDAR" />
-    <!--axis
-      xyz="0 1 0" /-->
-  </joint>
+    <axis
+      xyz="0 1 0" />
+  </joint-->
+  <xacro:include filename="$(find MarsRover)/urdf/PandarQT.xacro"/>
+  <PandarQT parent="LiDARSupport" name="PandarQT" topic="PandarQT_Data" hz="10" lasers="64" samples="600" visual="false">
+    <origin xyz="-0.0375 0.0544 0" rpy="${-PI/2} 0 0" />
+  </PandarQT>
 
   <!--TRANSMISSION-->
   <!--transmission name="simple_trans">

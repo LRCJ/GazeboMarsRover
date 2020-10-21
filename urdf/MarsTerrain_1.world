@@ -59,18 +59,11 @@
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
-          <!--material>
-            <lighting>1</lighting>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Grey</name>
-            </script>
-          </material-->
           <transparency>0</transparency>
           <cast_shadows>1</cast_shadows>
         </visual>
         <collision name='collision'>
-          <laser_retro>0</laser_retro>
+          <laser_retro>true</laser_retro>
           <max_contacts>100</max_contacts>
           <pose frame=''>0 0 10.5 0 -0 0</pose>
           <geometry>
