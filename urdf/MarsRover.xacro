@@ -12,7 +12,7 @@
 
   <link name="body">
     <inertial>
-      <origin xyz="-0.000147897244928197 -0.0822271126898096 1.11022302462516E-16" rpy="0 0 0" />
+      <origin xyz="-0.000147897244928197 -0.0822271126898096 0" rpy="0 0 0" />
       <mass value="32.9286570826472" />
       <inertia
         ixx="4.47491142188154"
@@ -41,7 +41,7 @@
   <link
     name="DiffBar">
     <inertial>
-      <origin xyz="7.23369697475107E-10 -0.0223125966605722 3.3729640969149E-08" rpy="0 0 0" />
+      <origin xyz="0 -0.0223125966605722 0" rpy="0 0 0" />
       <mass value="1.49170112220708" />
       <inertia
         ixx="0.030385701616174"
@@ -145,7 +145,7 @@
   </joint>
   <link name="LeftMiddleWheel">
     <inertial>
-      <origin xyz="0 -2.77555756156289E-17 1.66533453693773E-16" rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445032"
@@ -167,32 +167,20 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LeftMiddleWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/LeftMiddleWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_LeftViceRocker_LeftMiddleWheel"
-    type="continuous">
-    <origin
-      xyz="0.38804 -0.24313 -0.09"
-      rpy="0 0 0" />
-    <parent
-      link="LeftViceRocker" />
-    <child
-      link="LeftMiddleWheel" />
-    <axis
-      xyz="0 0 -1" />
+  <joint name="joint_LeftViceRocker_LeftMiddleWheel" type="continuous">
+    <origin xyz="0.38804 -0.24313 -0.09" rpy="0 0 0" />
+    <parent link="LeftViceRocker" />
+    <child link="LeftMiddleWheel" />
+    <axis xyz="0 0 -1" />
   </joint>
-  <link
-    name="LeftRearWheel">
+  <link name="LeftRearWheel">
     <inertial>
-      <origin
-        xyz="-5.55111512312578E-17 0 5.55111512312578E-17"
-        rpy="0 0 0" />
-      <mass
-        value="2.46800319485063" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445031"
         ixy="-1.52170599454406E-17"
@@ -202,50 +190,31 @@
         izz="0.040525806394713" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LeftRearWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/LeftRearWheel.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LeftRearWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/LeftRearWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_LeftViceRocker_LeftRearWheel"
-    type="continuous">
-    <origin
-      xyz="-0.38693 -0.2449 -0.09"
-      rpy="0 0 0" />
-    <parent
-      link="LeftViceRocker" />
-    <child
-      link="LeftRearWheel" />
-    <axis
-      xyz="0 0 -1" />
+  <joint name="joint_LeftViceRocker_LeftRearWheel" type="continuous">
+    <origin xyz="-0.38693 -0.2449 -0.09" rpy="0 0 0" />
+    <parent link="LeftViceRocker" />
+    <child link="LeftRearWheel" />
+    <axis xyz="0 0 -1" />
   </joint>
-  <link
-    name="LeftFrontWheel">
+  <link name="LeftFrontWheel">
     <inertial>
-      <origin
-        xyz="0 8.32667268468867E-17 0"
-        rpy="0 0 0" />
-      <mass
-        value="2.46800319485063" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445031"
         ixy="1.11983361154303E-17"
@@ -255,50 +224,31 @@
         izz="0.0405258063947128" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LeftFrontWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/LeftFrontWheel.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LeftFrontWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/LeftFrontWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_LeftMainRocker_LeftFrontWheel"
-    type="continuous">
-    <origin
-      xyz="0.75893 -0.27932 -0.145"
-      rpy="0 0 0" />
-    <parent
-      link="LeftMainRocker" />
-    <child
-      link="LeftFrontWheel" />
-    <axis
-      xyz="0 0 -1" />
+  <joint name="joint_LeftMainRocker_LeftFrontWheel" type="continuous">
+    <origin xyz="0.75893 -0.27932 -0.145" rpy="0 0 0" />
+    <parent link="LeftMainRocker" />
+    <child link="LeftFrontWheel" />
+    <axis xyz="0 0 -1" />
   </joint>
-  <link
-    name="RightMainRocker">
+  <link name="RightMainRocker">
     <inertial>
-      <origin
-        xyz="0.194763676146297 -0.101665854830299 0.0322193239500774"
-        rpy="0 0 0" />
-      <mass
-        value="2.31657690221752" />
+      <origin xyz="0.194763676146297 -0.101665854830299 0.0322193239500774" rpy="0 0 0" />
+      <mass value="2.31657690221752" />
       <inertia
         ixx="0.0253400528535679"
         ixy="0.0764346880668326"
@@ -308,50 +258,31 @@
         izz="0.322973476972127" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightMainRocker.STL" />
+        <mesh filename="package://mars_rover/meshes/RightMainRocker.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightMainRocker.STL" />
+        <mesh filename="package://mars_rover/meshes/RightMainRocker.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_body_RightMainRocker"
-    type="continuous">
-    <origin
-      xyz="0 -0.155 0.395"
-      rpy="0 0 0" />
-    <parent
-      link="body" />
-    <child
-      link="RightMainRocker" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="joint_body_RightMainRocker" type="continuous">
+    <origin xyz="0 -0.155 0.395" rpy="0 0 0" />
+    <parent link="body" />
+    <child link="RightMainRocker" />
+    <axis xyz="0 0 1" />
   </joint>
-  <link
-    name="RightViceRocker">
+  <link name="RightViceRocker">
     <inertial>
-      <origin
-        xyz="-3.74727935245119E-05 -0.142829300218082 0.00457781208829156"
-        rpy="0 0 0" />
-      <mass
-        value="1.70193743881046" />
+      <origin xyz="0 -0.142829300218082 0.00457781208829156" rpy="0 0 0" />
+      <mass value="1.70193743881046" />
       <inertia
         ixx="0.0116402353185612"
         ixy="2.70826203635347E-05"
@@ -361,50 +292,31 @@
         izz="0.1254823143192" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightViceRocker.STL" />
+        <mesh filename="package://mars_rover/meshes/RightViceRocker.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightViceRocker.STL" />
+        <mesh filename="package://mars_rover/meshes/RightViceRocker.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_RightMainRocker_RightViceRocker"
-    type="continuous">
-    <origin
-      xyz="-0.40088 -0.023015 0.055"
-      rpy="0 0 0" />
-    <parent
-      link="RightMainRocker" />
-    <child
-      link="RightViceRocker" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="joint_RightMainRocker_RightViceRocker" type="continuous">
+    <origin xyz="-0.40088 -0.023015 0.055" rpy="0 0 0" />
+    <parent link="RightMainRocker" />
+    <child link="RightViceRocker" />
+    <axis xyz="0 0 1" />
   </joint>
-  <link
-    name="RightMiddleWheel">
+  <link name="RightMiddleWheel">
     <inertial>
-      <origin
-        xyz="5.55111512312578E-17 2.77555756156289E-17 4.44089209850063E-16"
-        rpy="0 0 0" />
-      <mass
-        value="2.46800319485063" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445029"
         ixy="-1.9031573010273E-18"
@@ -414,50 +326,31 @@
         izz="0.0405258063947124" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightMiddleWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightMiddleWheel.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightMiddleWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightMiddleWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_RightViceRocker_RightMiddleWheel"
-    type="continuous">
-    <origin
-      xyz="0.38742 -0.24412 0.09"
-      rpy="0 0 0" />
-    <parent
-      link="RightViceRocker" />
-    <child
-      link="RightMiddleWheel" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="joint_RightViceRocker_RightMiddleWheel" type="continuous">
+    <origin xyz="0.38742 -0.24412 0.09" rpy="0 0 0" />
+    <parent link="RightViceRocker" />
+    <child link="RightMiddleWheel" />
+    <axis xyz="0 0 1" />
   </joint>
-  <link
-    name="RightRearWheel">
+  <link name="RightRearWheel">
     <inertial>
-      <origin
-        xyz="-5.55111512312578E-17 0 2.22044604925031E-16"
-        rpy="0 0 0" />
-      <mass
-        value="2.46800319485063" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445032"
         ixy="5.55887981239045E-18"
@@ -467,50 +360,31 @@
         izz="0.0405258063947131" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightRearWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightRearWheel.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightRearWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightRearWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_RightViceRocker_RightRearWheel"
-    type="continuous">
-    <origin
-      xyz="-0.38755 -0.24391 0.09"
-      rpy="0 0 0" />
-    <parent
-      link="RightViceRocker" />
-    <child
-      link="RightRearWheel" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="joint_RightViceRocker_RightRearWheel" type="continuous">
+    <origin xyz="-0.38755 -0.24391 0.09" rpy="0 0 0" />
+    <parent link="RightViceRocker" />
+    <child link="RightRearWheel" />
+    <axis xyz="0 0 1" />
   </joint>
-  <link
-    name="RightFrontWheel">
+  <link name="RightFrontWheel">
     <inertial>
-      <origin
-        xyz="2.22044604925031E-16 2.77555756156289E-17 2.22044604925031E-16"
-        rpy="0 0 0" />
-      <mass
-        value="2.46800319485063" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <mass value="2.46800319485063" />
       <inertia
         ixx="0.0218761505445032"
         ixy="-6.61440556312683E-18"
@@ -520,50 +394,31 @@
         izz="0.0405258063947131" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightFrontWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightFrontWheel.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      <material name="">
+        <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/RightFrontWheel.STL" />
+        <mesh filename="package://mars_rover/meshes/RightFrontWheel.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_RightMainRocker_RightFrontWheel"
-    type="continuous">
-    <origin
-      xyz="0.75889 -0.27943 0.145"
-      rpy="0 0 0" />
-    <parent
-      link="RightMainRocker" />
-    <child
-      link="RightFrontWheel" />
-    <axis
-      xyz="0 0 1" />
+  <joint name="joint_RightMainRocker_RightFrontWheel" type="continuous">
+    <origin xyz="0.75889 -0.27943 0.145" rpy="0 0 0" />
+    <parent link="RightMainRocker" />
+    <child link="RightFrontWheel" />
+    <axis xyz="0 0 1" />
   </joint>
-  <link
-    name="LiDARBodyCon">
+  <link name="LiDARBodyCon">
     <inertial>
-      <origin
-        xyz="-0.014583 -0.0040905 0"
-        rpy="0 0 0" />
-      <mass
-        value="0.2293" />
+      <origin xyz="-0.014583 -0.0040905 0" rpy="0 0 0" />
+      <mass value="0.2293" />
       <inertia
         ixx="0.00036659"
         ixy="-4.7613E-05"
@@ -573,50 +428,32 @@
         izz="0.00023526" />
     </inertial>
     <visual>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LiDARBodyCon.STL" />
+        <mesh filename="package://mars_rover/meshes/LiDARBodyCon.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.89804 0.91765 0.92941 1" />
+      <material name="">
+        <color rgba="0.89804 0.91765 0.92941 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LiDARBodyCon.STL" />
+        <mesh filename="package://mars_rover/meshes/LiDARBodyCon.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_body_LiDARCon"
-    type="fixed">
-    <origin
-      xyz="0.6475 ${0.295+LidarHeight} 0"
-      rpy="0 0 0" />
-    <parent
-      link="body" />
-    <child
-      link="LiDARBodyCon" />
-    <axis
-      xyz="0 0 0" />
+  <joint name="joint_body_LiDARCon" type="fixed">
+    <origin xyz="0.6475 ${0.295+LidarHeight} 0" rpy="0 0 0" />
+    <parent link="body" />
+    <child link="LiDARBodyCon" />
+    <axis xyz="0 0 0" />
   </joint>
   <link
     name="LiDARSupport">
     <inertial>
-      <origin
-        xyz="-0.03997 -7.7716E-16 1.1102E-16"
-        rpy="0 0 0" />
-      <mass
-        value="0.23629" />
+      <origin xyz="-0.03997 0 0" rpy="0 0 0" />
+      <mass value="0.23629" />
       <inertia
         ixx="0.00032757"
         ixy="-8.0625E-22"
@@ -626,41 +463,26 @@
         izz="0.00014519" />
     </inertial>
     <visual>
-      <origin
-        xyz="-0.0825 0.004 0"
-        rpy="0 0 0" />
+      <origin xyz="-0.0825 0.004 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LiDARSupport.STL" />
+        <mesh filename="package://mars_rover/meshes/LiDARSupport.STL" />
       </geometry>
-      <material
-        name="">
-        <color
-          rgba="0.89804 0.91765 0.92941 1" />
+      <material name="">
+        <color rgba="0.89804 0.91765 0.92941 1" />
       </material>
     </visual>
     <collision>
-      <origin
-        xyz="-0.0825 0.004 0"
-        rpy="0 0 0" />
+      <origin xyz="-0.0825 0.004 0" rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://mars_rover/meshes/LiDARSupport.STL" />
+        <mesh filename="package://mars_rover/meshes/LiDARSupport.STL" />
       </geometry>
     </collision>
   </link>
-  <joint
-    name="joint_LiDARBodyCon_LiDARSupport"
-    type="fixed">
-    <origin
-      xyz="0.035 0.009 0"
-      rpy="0 0 ${-LidarAngle}" />
-    <parent
-      link="LiDARBodyCon" />
-    <child
-      link="LiDARSupport" />
-    <axis
-      xyz="0 0 -1" />
+  <joint name="joint_LiDARBodyCon_LiDARSupport" type="fixed">
+    <origin xyz="0.035 0.009 0" rpy="0 0 ${-LidarAngle}" />
+    <parent link="LiDARBodyCon" />
+    <child link="LiDARSupport" />
+    <axis xyz="0 0 -1" />
     <limit
       lower="${-PI/2}"
       upper="0"
@@ -670,9 +492,14 @@
     <link name="${LidarName}">
       <inertial>
         <mass value="0.47584" />
-        <origin xyz="9.4172E-09 -0.012924 0.00012666" rpy="${PI/2} 0 0" />
-        <inertia ixx="0.00040186" ixy="1.5748E-10" ixz="-1.4024E-10"
-          iyy="0.0003397" iyz="1.3527E-06" izz="0.00040759" />
+        <origin xyz="0 -0.012924 0.00012666" rpy="${PI/2} 0 0" />
+        <inertia
+          ixx="0.00040186"
+          ixy="1.5748E-10"
+          ixz="-1.4024E-10"
+          iyy="0.0003397"
+          iyz="1.3527E-06"
+          izz="0.00040759" />
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="${PI/2} 0 0" />

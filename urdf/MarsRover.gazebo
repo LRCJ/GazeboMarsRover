@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+  <xacro:property name="mu" value="0.5" />
 	<gazebo reference="body">
 		<material>Gazebo/Gold</material>
 	</gazebo>
@@ -17,33 +18,27 @@
 	</gazebo>
 	<gazebo reference="LeftFrontWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="LeftMiddleWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="LeftRearWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightFrontWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightMiddleWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightRearWheel">
 		<material>Gazebo/Grey</material>
-		<mu1>0.3</mu1>
-		<mu2>0.3</mu2>
+		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="DiffBar">
 		<material>Gazebo/Green</material>
@@ -159,10 +154,14 @@
 			<robotNamespace>MarsRover</robotNamespace>
 			<robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
 		</plugin-->
+
+		<!--this plugin publish topic '/joint_states'-->
 		<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-		   <jointName>joint_body_DiffBar,joint_body_LeftMainRocker,joint_LeftMainRocker_LeftViceRocker,joint_LeftViceRocker_LeftMiddleWheel,joint_LeftViceRocker_LeftRearWheel,joint_LeftMainRocker_LeftFrontWheel,joint_body_RightMainRocker,joint_RightMainRocker_RightViceRocker,joint_RightViceRocker_RightMiddleWheel,joint_RightViceRocker_RightRearWheel,joint_RightMainRocker_RightFrontWheel</jointName>
-		   <updateRate>50.0</updateRate>
+			<jointName>joint_body_DiffBar,joint_body_LeftMainRocker,joint_LeftMainRocker_LeftViceRocker,joint_LeftViceRocker_LeftMiddleWheel,joint_LeftViceRocker_LeftRearWheel,joint_LeftMainRocker_LeftFrontWheel,joint_body_RightMainRocker,joint_RightMainRocker_RightViceRocker,joint_RightViceRocker_RightMiddleWheel,joint_RightViceRocker_RightRearWheel,joint_RightMainRocker_RightFrontWheel</jointName>
+			<updateRate>50.0</updateRate>
 		</plugin>
+
+		<!--this plugin drive rover's wheel for motion-->
 		<plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
 			<updateRate>100.0</updateRate>
 			<robotNamespace></robotNamespace>
@@ -170,7 +169,7 @@
 			<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
 			<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
 			<rightRearJoint>joint_RightViceRocker_RightRearWheel</rightRearJoint>
-			<wheelSeparation>4</wheelSeparation>
+			<wheelSeparation>1.08</wheelSeparation><!--wheel distance between L&R-->
 			<wheelDiameter>0.3</wheelDiameter>
 			<commandTopic>cmd_vel</commandTopic>
 			<odometryTopic>odom</odometryTopic>
