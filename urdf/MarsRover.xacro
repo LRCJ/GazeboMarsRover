@@ -9,6 +9,11 @@
   <xacro:property name="LidarAngle" value="${PI/6}" />
   <xacro:property name="LidarHeight" value="-0.0" />
   <xacro:property name="LidarName" value="PandarQT" />
+  <xacro:property name="LidarDataTopicName" value="PandarQT_Data" />
+  <xacro:property name="LidarHz" value="10" />
+  <xacro:property name="LidarLasers" value="64" />
+  <xacro:property name="LidarSamples" value="600" />
+  <xacro:property name="LidarBeamVisual" value="false" />
 
   <link name="body">
     <inertial>
@@ -342,7 +347,7 @@
     </collision>
   </link>
   <joint name="joint_RightViceRocker_RightMiddleWheel" type="continuous">
-    <origin xyz="0.38742 -0.24412 0.09" rpy="0 0 0" />
+    <origin xyz="0.38742 -0.24412 0.09" rpy="${PI} 0 0" />
     <parent link="RightViceRocker" />
     <child link="RightMiddleWheel" />
     <axis xyz="0 0 1" />
@@ -376,7 +381,7 @@
     </collision>
   </link>
   <joint name="joint_RightViceRocker_RightRearWheel" type="continuous">
-    <origin xyz="-0.38755 -0.24391 0.09" rpy="0 0 0" />
+    <origin xyz="-0.38755 -0.24391 0.09" rpy="${PI} 0 0" />
     <parent link="RightViceRocker" />
     <child link="RightRearWheel" />
     <axis xyz="0 0 1" />
@@ -410,7 +415,7 @@
     </collision>
   </link>
   <joint name="joint_RightMainRocker_RightFrontWheel" type="continuous">
-    <origin xyz="0.75889 -0.27943 0.145" rpy="0 0 0" />
+    <origin xyz="0.75889 -0.27943 0.145" rpy="${PI} 0 0" />
     <parent link="RightMainRocker" />
     <child link="RightFrontWheel" />
     <axis xyz="0 0 1" />
@@ -521,5 +526,5 @@
     </joint>
     
     <xacro:include filename="$(find mars_rover)/urdf/PandarQT.xacro"/>
-    <xacro:PandarQT link="${LidarName}" topic="PandarQT_Data" hz="10" lasers="64" samples="600" visual="false"></xacro:PandarQT>
+    <xacro:PandarQT link="${LidarName}" topic="${LidarDataTopicName}" hz="${LidarHz}" lasers="${LidarLasers}" samples="${LidarSamples}" visual="${LidarBeamVisual}"></xacro:PandarQT>
 </robot>

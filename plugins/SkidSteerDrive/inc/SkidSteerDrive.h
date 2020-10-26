@@ -123,7 +123,9 @@ namespace gazebo
             void cmdVelCallback(const geometry_msgs::Twist::ConstPtr& cmd_msg);
 
             double x_;
+            double x__;
             double rot_;
+            double rot__;
             bool alive_;
 
             // Update Rate

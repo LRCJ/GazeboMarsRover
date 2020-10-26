@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-  <!--set the arguments in launch file-->
-  <!--for start gazebo-->
+  <!--**set the arguments in launch file**-->
+  <!--**for start gazebo**-->
   <arg name="paused" default="true" />
   <arg name="use_sim_time" default="true" />
   <arg name="extra_gazebo_args" default=""/>
@@ -15,17 +15,20 @@
   <arg name="use_clock_frequency" default="false"/>
   <arg name="pub_clock_frequency" default="100"/>
   <arg name="enable_ros_network" default="true" />
-  <!--for start <node/>-->
+  <!--**for start <node/>**-->
   <arg name="output" default="screen"/>
   <arg name="respawn_gazebo" default="false"/>
   <arg name="server_required" default="false"/>
   <arg name="gui_required" default="false"/>
+  <arg name="LidarDataTopicName" default="PandarQT_Data"/>
 
-  <!--set the parameters in ros paremeter server-->
+  <!--**set the parameters in ros paremeter server**-->
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find mars_rover)/urdf/MarsRover.xacro" />
   <!--rosparam file="$(find mars_rover)/config/ROS_Control.yaml" command="load" /-->
+  <param name="Speed" type="double" value="2.0" />
+  <param name="RotationSpeed" type="double" value="1.0" />
 
-  <!-- set use_sim_time flag -->
+  <!--**set use_sim_time flag**-->
   <param name="/use_sim_time" value="$(arg use_sim_time)"/>
   <group if="$(arg use_clock_frequency)">
     <param name="gazebo/pub_clock_frequency" value="$(arg pub_clock_frequency)" />
@@ -34,7 +37,7 @@
     <param name="gazebo/enable_ros_network" value="$(arg enable_ros_network)" />
   </group>
 
-  <!-- set command arguments -->
+  <!--**set command arguments**-->
   <arg unless="$(arg paused)" name="command_arg1" value=""/>
   <arg     if="$(arg paused)" name="command_arg1" value="-u"/>
   <arg unless="$(arg recording)" name="command_arg2" value=""/>
@@ -44,29 +47,35 @@
   <arg unless="$(arg debug)" name="script_type" value="gzserver"/>
   <arg     if="$(arg debug)" name="script_type" value="debug"/>
 
-  <!-- start gazebo server-->
+  <!--**start gazebo server**-->
   <node name="gazebo" pkg="gazebo_ros" type="$(arg script_type)" respawn="$(arg respawn_gazebo)" output="$(arg output)" args="$(arg command_arg1) $(arg command_arg2) $(arg command_arg3) -e $(arg physics) $(arg extra_gazebo_args) $(arg world_name)" required="$(arg server_required)" />
 
-  <!-- start gazebo client -->
+  <!--**start gazebo client**-->
   <group if="$(arg gui)">
     <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="$(arg output)" args="$(arg command_arg3)" required="$(arg gui_required)"/>
   </group>
   
 
-  <!--spawn a model-->
+  <!--**spawn a model**-->
   <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" args="-z 1.0 -R 1.570796327 -urdf -param robot_description -model MarsRover" respawn="false" output="screen" />
   
-  <!--pulish topic to rviz model for controlling every joint-->
+  <!--**pulish topic to rviz model for controlling every joint**-->
   <!--node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui" /-->
   
-  <!--load rviz node-->
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find mars_rover)/rviz/rviz.rviz" />
+  <!--**load rviz node**-->
+  <!--node pkg="rviz" type="rviz" name="rviz" args="-d $(find mars_rover)/rviz/rviz.rviz" /-->
 
-  <!--This package allows you to publish the state of a robot to tf2 by topic joint_state-->
+  <!--**This package allows you to publish the state of a robot to tf2 by topic joint_state**-->
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
 
-  <!--load control manage node-->
+  <!--**load control manage node**-->
   <!--node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="MarsRover" args="joint_state_controller joint1_position_controller"/-->
+  <!--load my ros node-->
+
+
+  <!--process lidar data-->
+  <node pkg="proc_lidar_data" type="proc_lidar_data" name="ShowLidarPointCloud" args="$(arg LidarDataTopicName)" output="screen" />
+
 </launch>

@@ -71,7 +71,10 @@ namespace gazebo
         LEFT_REAR=3,
     };
 
-    GazeboRosSkidSteerDrive::GazeboRosSkidSteerDrive() {}
+    GazeboRosSkidSteerDrive::GazeboRosSkidSteerDrive()
+    {
+
+    }
 
     GazeboRosSkidSteerDrive::~GazeboRosSkidSteerDrive()
     {
@@ -92,29 +95,36 @@ namespace gazebo
         new_settings.c_cc[VMIN] = 1;
         tcsetattr(0,TCSANOW,&new_settings);
         while(true)
-        {
-            int c = getchar();
+        {   int c = getchar();
+            ros::param::get("Speed",this->x__);
+            ros::param::get("RotationSpeed",this->rot__);
             switch(c)
             {
                 case 0x44:
-                ROS_DEBUG("LEFT");
-                this->x_ = -1.0;
-                this->rot_ = 0.0;
+                this->x_ = 0.0;
+                this->rot_ = this->rot__;
+                ROS_INFO("TurnLeft!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
                 break;
                 case 0x43:
-                ROS_DEBUG("RIGHT");
-                this->x_ = 1.0;
-                this->rot_ = 0.0;
+                this->x_ = 0.0;
+                this->rot_ = -this->rot__;
+                ROS_INFO("TurnRight!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
                 break;
                 case 0x41:
                 ROS_DEBUG("UP");
-                this->x_ = 0.0;
-                this->rot_ = -2.0;
+                this->x_ = this->x__;
+                this->rot_ = 0.0;
+                ROS_INFO("Forward!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
                 break;
                 case 0x42:
-                ROS_DEBUG("DOWN");
+                this->x_ = -this->x__;
+                this->rot_ = 0.0;
+                ROS_INFO("BackOff!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                break;
+                case 0x53:
                 this->x_ = 0.0;
-                this->rot_ = 2.0;
+                this->rot_ = 0.0;
+                ROS_INFO("STOP!!!inear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
                 break;
             }
         }
