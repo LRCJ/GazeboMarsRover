@@ -60,6 +60,10 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
+//for keyboard input
+#include <termio.h>
+#include <stdio.h>
+
 namespace gazebo
 {
     class Joint;
@@ -136,6 +140,7 @@ namespace gazebo
             double covariance_x_;
             double covariance_y_;
             double covariance_yaw_;
+
     };
 }
 #endif /* GAZEBO_ROS_SKID_STEER_DRIVE_H_ */

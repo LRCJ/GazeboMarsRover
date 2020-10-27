@@ -57,9 +57,6 @@
 #include <boost/bind.hpp>
 #include <boost/thread/mutex.hpp>
 
-#include <termio.h>
-#include <stdio.h>
-
 namespace gazebo
 {
 
@@ -78,6 +75,7 @@ namespace gazebo
 
     GazeboRosSkidSteerDrive::~GazeboRosSkidSteerDrive()
     {
+        
         delete rosnode_;
         delete transform_broadcaster_;
     }
@@ -89,9 +87,10 @@ namespace gazebo
         struct termios stored_settings;
         tcgetattr(0,&stored_settings);
         new_settings = stored_settings;
-        new_settings.c_lflag &= (~ICANON | ECHO);
+        new_settings.c_lflag &= ~ICANON;//关闭标准输入处理，即默认的回车和换行符之间的映射已经不存在了
+        new_settings.c_lflag &= ~ECHO;//关闭回显功能
+        //以下两行用于设置键入字符后无需按下回车即可使getchar立刻返回
         new_settings.c_cc[VTIME] = 0;
-        tcgetattr(0,&stored_settings);
         new_settings.c_cc[VMIN] = 1;
         tcsetattr(0,TCSANOW,&new_settings);
         while(true)
@@ -103,32 +102,35 @@ namespace gazebo
                 case 0x44:
                 this->x_ = 0.0;
                 this->rot_ = this->rot__;
-                ROS_INFO("TurnLeft!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                ROS_INFO("TurnLeft!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x43:
                 this->x_ = 0.0;
                 this->rot_ = -this->rot__;
-                ROS_INFO("TurnRight!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                ROS_INFO("TurnRight!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x41:
                 ROS_DEBUG("UP");
                 this->x_ = this->x__;
                 this->rot_ = 0.0;
-                ROS_INFO("Forward!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                ROS_INFO("Forward!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x42:
                 this->x_ = -this->x__;
                 this->rot_ = 0.0;
-                ROS_INFO("BackOff!!!Linear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                ROS_INFO("BackOff!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x53:
                 this->x_ = 0.0;
                 this->rot_ = 0.0;
-                ROS_INFO("STOP!!!inear Speed:%lf,Rotation Speed:%lf\n",this->x_,this->rot_);
+                ROS_INFO("STOP!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
+                break;
+                case 0x05:
+                ROS_INFO("!!!TURN ON ECHO!!!");
+                tcsetattr(0,TCSANOW,&stored_settings);
                 break;
             }
         }
-        tcsetattr(0,TCSANOW,&stored_settings);
     }
 
     // Load the controller
@@ -359,11 +361,13 @@ namespace gazebo
         odometry_publisher_ = rosnode_->advertise<nav_msgs::Odometry>(odometry_topic_, 1);
 
         //read key board input
-        printf("started to create a thread to process keyboard input!\n");
+        ROS_INFO("started to create a thread to process keyboard input!");
         boost::thread f = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::scanKeyboard, this));
         //f.join();
         f.detach();
-        printf("create a thread successfully!\n");
+        ROS_INFO("create a thread successfully!Attention Please!you should turn on ECHO before EXIT by press ctrl+E!");
+        ROS_INFO("Attention Please!you should turn on ECHO before EXIT by press ctrl+E!");
+        ROS_INFO("Otherwise turn on ECHO by shell command 'stty echo'!");
 
         // start custom queue for diff drive
         this->callback_queue_thread_ = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::QueueThread, this));
