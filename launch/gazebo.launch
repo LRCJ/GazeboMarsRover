@@ -27,7 +27,7 @@
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find mars_rover)/urdf/MarsRover.xacro" />
   <!--rosparam file="$(find mars_rover)/config/ROS_Control.yaml" command="load" /-->
   <param name="Speed" type="double" value="2.0" />
-  <param name="RotationSpeed" type="double" value="1.0" />
+  <param name="RotationSpeed" type="double" value="2.0" />
 
   <!--**set use_sim_time flag**-->
   <param name="/use_sim_time" value="$(arg use_sim_time)"/>

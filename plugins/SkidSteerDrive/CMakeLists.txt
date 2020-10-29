@@ -21,7 +21,7 @@ link_directories(
   ${GAZEBO_LIBRARY_DIRS}
 )
 
-add_library(SkidSteerDrive src/SkidSteerDrive.cpp)
+add_library(SkidSteerDrive src/SkidSteerDrive.cpp src/XBOX.cpp)
 target_link_libraries(SkidSteerDrive
   ${catkin_LIBRARIES}
   ${GAZEBO_LIBRARIES}

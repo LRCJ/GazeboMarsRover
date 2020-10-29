@@ -63,6 +63,8 @@
 //for keyboard input
 #include <termio.h>
 #include <stdio.h>
+#include <unistd.h>
+#include "XBOX.h" 
 
 namespace gazebo
 {
@@ -84,6 +86,7 @@ namespace gazebo
             void publishOdometry(double step_time);
             void getWheelVelocities();
             void scanKeyboard();
+            void scanXBOX();
 
             physics::WorldPtr world;
             physics::ModelPtr parent;
@@ -127,9 +130,7 @@ namespace gazebo
             void cmdVelCallback(const geometry_msgs::Twist::ConstPtr& cmd_msg);
 
             double x_;
-            double x__;
             double rot_;
-            double rot__;
             bool alive_;
 
             // Update Rate
