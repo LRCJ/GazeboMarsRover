@@ -194,9 +194,9 @@ void GazeboRosVelodyneLaser::Load(sensors::SensorPtr _parent, sdf::ElementPtr _s
   callback_laser_queue_thread_ = boost::thread( boost::bind( &GazeboRosVelodyneLaser::laserQueueThread,this ) );
 
 #if GAZEBO_MAJOR_VERSION >= 7
-  ROS_INFO("Velodyne %slaser plugin ready, %i lasers", STR_GPU_, parent_ray_sensor_->VerticalRangeCount());
+  ROS_INFO("Lidar %slaser plugin ready, %i lasers", STR_GPU_, parent_ray_sensor_->VerticalRangeCount());
 #else
-  ROS_INFO("Velodyne %slaser plugin ready, %i lasers", STR_GPU_, parent_ray_sensor_->GetVerticalRangeCount());
+  ROS_INFO("Lidar %slaser plugin ready, %i lasers", STR_GPU_, parent_ray_sensor_->GetVerticalRangeCount());
 #endif
 }
 
@@ -331,13 +331,19 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
       }
 
       // pAngle is rotated by yAngle:
-      if ((MIN_RANGE < r) && (r < MAX_RANGE)) {
-        *((float*)(ptr + 0)) = r * cos(pAngle) * cos(yAngle);
-        *((float*)(ptr + 4)) = r * cos(pAngle) * sin(yAngle);
+      if ((MIN_RANGE < r) && (r < MAX_RANGE))
+      {
+        float x = r * cos(pAngle) * cos(yAngle);
+        float y = r * cos(pAngle) * sin(yAngle);
+        float z = r * sin(pAngle);
+        if( (x<1.0&&x>-1.2) && (y<0.8&&y>-1.0) && (z<0.0&&z>-1.5) )
+          continue;
+        *((float*)(ptr + 0)) = x;
+        *((float*)(ptr + 4)) = y;
 #if GAZEBO_MAJOR_VERSION > 2
-        *((float*)(ptr + 8)) = r * sin(pAngle);
+        *((float*)(ptr + 8)) = z;
 #else
-        *((float*)(ptr + 8)) = -r * sin(pAngle);
+        *((float*)(ptr + 8)) = -z;
 #endif
         *((float*)(ptr + 16)) = intensity;
 #if GAZEBO_MAJOR_VERSION > 2

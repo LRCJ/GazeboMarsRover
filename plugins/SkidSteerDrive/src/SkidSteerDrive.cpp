@@ -36,26 +36,7 @@
  * $ Id: 06/25/2013 11:23:40 AM materna $
  */
 
-
-#include <algorithm>
-#include <assert.h>
-
-#include <SkidSteerDrive.h>
-
-//#include <gazebo/math/gzmath.hh>
-//#include <ignition/math4/ignition/math.hh>
-#include <ignition/math/Pose3.hh>
-#include <ignition/math/Vector3.hh>
-#include <sdf/sdf.hh>
-
-#include <ros/ros.h>
-#include <tf/transform_broadcaster.h>
-#include <tf/transform_listener.h>
-#include <geometry_msgs/Twist.h>
-#include <nav_msgs/GetMap.h>
-#include <nav_msgs/Odometry.h>
-#include <boost/bind.hpp>
-#include <boost/thread/mutex.hpp>
+#include "SkidSteerDrive.h"
 
 namespace gazebo
 {
@@ -70,7 +51,15 @@ namespace gazebo
 
     GazeboRosSkidSteerDrive::GazeboRosSkidSteerDrive()
     {
+        // Initialize velocity stuff
+        wheel_speed_[RIGHT_FRONT] = 0;
+        wheel_speed_[LEFT_FRONT] = 0;
+        wheel_speed_[RIGHT_REAR] = 0;
+        wheel_speed_[LEFT_REAR] = 0;
 
+        x_ = 0;
+        rot_ = 0;
+        //alive_ = true;
     }
 
     GazeboRosSkidSteerDrive::~GazeboRosSkidSteerDrive()
@@ -80,6 +69,7 @@ namespace gazebo
         delete transform_broadcaster_;
     }
 
+    //扫描键盘输入，控制小车前进转弯
     void GazeboRosSkidSteerDrive::scanKeyboard()
     {
         double x__,rot__;
@@ -94,7 +84,7 @@ namespace gazebo
         new_settings.c_cc[VMIN] = 1;
         tcsetattr(0,TCSANOW,&new_settings);
         while(true)
-        {   int c = getchar();
+        {   int c = getchar();//阻塞式的
             ros::param::get("Speed",x__);
             ros::param::get("RotationSpeed",rot__);
             switch(c)
@@ -125,15 +115,12 @@ namespace gazebo
                 this->rot_ = 0.0;
                 ROS_INFO("STOP!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
-                //case 0x05:
-                //ROS_INFO("!!!TURN ON ECHO!!!");
-                //tcsetattr(0,TCSANOW,&stored_settings);
-                //break;
             }
         }
     }
 
     //read XBOX input
+    //扫描手柄输入，控制小车前进转弯及其速度
     void GazeboRosSkidSteerDrive::scanXBOX()
     {
         double x__,rot__;
@@ -144,23 +131,23 @@ namespace gazebo
         while(1)
         {
             usleep(1000*1000);
-            ROS_INFO("started to open XBOX file!");
+            //ROS_INFO("started to open XBOX file!");
             xbox_fd = xbox_open("/dev/input/js0");
             if(xbox_fd!=-1)
             {
-                ROS_INFO("started to read XBOX input!");
+                //ROS_INFO("started to read XBOX input!");
             }
             else
             {
-                ROS_INFO("open XBOX file failed!");
+                //ROS_INFO("open XBOX file failed!");
                 continue;
             }
             while(1)
             { 
-                len = xbox_map_read(xbox_fd, &map);  
+                len = xbox_map_read(xbox_fd, &map);//阻塞式的
                 if (len == -1)  
                 {
-                    ROS_INFO("read XBOX input failed!");
+                    //ROS_INFO("read XBOX input failed!");
                     break;
                 }
                 this->x_ = map.ly/-32767.0*x__;
@@ -178,6 +165,7 @@ namespace gazebo
         this->parent = _parent;
         this->world = _parent->GetWorld();
 
+        //获取sdf文件中调用plugin时输入的自定义参数
         this->robot_namespace_ = "";
         if (!_sdf->HasElement("robotNamespace"))
             ROS_INFO("GazeboRosSkidSteerDrive Plugin missing <robotNamespace>, defaults to \"%s\"",this->robot_namespace_.c_str());
@@ -195,7 +183,7 @@ namespace gazebo
         else
             this->broadcast_tf_ = _sdf->GetElement("broadcastTF")->Get<bool>();
 
-    // TODO write error if joint doesn't exist!
+        // TODO write error if joint doesn't exist!
         this->left_front_joint_name_ = "left_front_joint";
         if(!_sdf->HasElement("leftFrontJoint"))
             ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <leftFrontJoint>, defaults to \"%s\"",
@@ -230,13 +218,11 @@ namespace gazebo
             this->parent->GetJoint(right_front_joint_name_)->GetAnchor(0));*/
 
         this->wheel_separation_ = 0.4;
-
         if(!_sdf->HasElement("wheelSeparation"))
             ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <wheelSeparation>, defaults to value from robot_description: %f",
                 this->robot_namespace_.c_str(), this->wheel_separation_);
         else
-            this->wheel_separation_ =
-                _sdf->GetElement("wheelSeparation")->Get<double>();
+            this->wheel_separation_ = _sdf->GetElement("wheelSeparation")->Get<double>();
 
         // TODO get this from robot_description
         this->wheel_diameter_ = 0.15;
@@ -260,7 +246,14 @@ namespace gazebo
         else 
             this->command_topic_ = _sdf->GetElement("commandTopic")->Get<std::string>();
 
-        this->odometry_topic_ = "odom";
+        this->path_topic_ = "path";
+        if(!_sdf->HasElement("PathTopic"))
+            ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <odometryTopic>, defaults to \"%s\"",
+                this->robot_namespace_.c_str(), this->path_topic_.c_str());
+        else
+            this->path_topic_ = _sdf->GetElement("PathTopic")->Get<std::string>();
+
+        this->odometry_topic_ = "odometry";
         if(!_sdf->HasElement("odometryTopic"))
             ROS_WARN("GazeboRosSkidSteerDrive Plugin (ns = %s) missing <odometryTopic>, defaults to \"%s\"",
                 this->robot_namespace_.c_str(), this->odometry_topic_.c_str());
@@ -311,21 +304,12 @@ namespace gazebo
 
         // Initialize update rate stuff
         if(this->update_rate_ > 0.0)
-            this->update_period_ = 1.0 / this->update_rate_;
+            this->update_period_ = 1.0 / this->update_rate_;//update_rate_ = 100,update_period_ = 0.01
         else
             this->update_period_ = 0.0;
         last_update_time_ = this->world->SimTime();
 
-        // Initialize velocity stuff
-        wheel_speed_[RIGHT_FRONT] = 0;
-        wheel_speed_[LEFT_FRONT] = 0;
-        wheel_speed_[RIGHT_REAR] = 0;
-        wheel_speed_[LEFT_REAR] = 0;
-
-        x_ = 0;
-        rot_ = 0;
-        alive_ = true;
-
+        //获取各个驱动关节的指针并进行相关设置
         joints[LEFT_FRONT] = this->parent->GetJoint(left_front_joint_name_);
         joints[RIGHT_FRONT] = this->parent->GetJoint(right_front_joint_name_);
         joints[LEFT_REAR] = this->parent->GetJoint(left_rear_joint_name_);
@@ -382,55 +366,55 @@ namespace gazebo
                 << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
             return;
         }
+        else
+        {
+            rosnode_ = new ros::NodeHandle(this->robot_namespace_);
 
-        rosnode_ = new ros::NodeHandle(this->robot_namespace_);
+            ROS_INFO("Starting GazeboRosSkidSteerDrive Plugin (ns = %s)!", this->robot_namespace_.c_str());
 
-        ROS_INFO("Starting GazeboRosSkidSteerDrive Plugin (ns = %s)!", this->robot_namespace_.c_str());
+            transform_broadcaster_ = new tf::TransformBroadcaster();
 
-        tf_prefix_ = tf::getPrefixParam(*rosnode_);
-        transform_broadcaster_ = new tf::TransformBroadcaster();
+            //发布相对世界坐标系的位姿信息
+            odometry_publisher_ = rosnode_->advertise<nav_msgs::Odometry>(odometry_topic_, 2);
+            //累计相对世界坐标系的位姿信息，可在rviz订阅该数据，可视化累积的位姿信息形成轨迹
+            path_publisher_ = rosnode_->advertise<nav_msgs::Path>(path_topic_, 2);
+            path_.header.frame_id = robot_base_frame_;
+            path_.header.stamp = ros::Time::now();
 
-        // ROS: Subscribe to the velocity command topic (usually "cmd_vel")
-        ros::SubscribeOptions so = ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic_, 1,
-            boost::bind(&GazeboRosSkidSteerDrive::cmdVelCallback, this, _1),ros::VoidPtr(), &queue_);
+            //订阅/cmd_vel topic，这里似乎不需要调用ros::spin/spinOnce就能执行订阅话题的回调函数
+            // ROS: Subscribe to the velocity command topic (usually "cmd_vel")
+            //ros::SubscribeOptions so = ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic_, 1,
+            //    boost::bind(&GazeboRosSkidSteerDrive::cmdVelCallback, this, _1),ros::VoidPtr(), &queue_);
+            cmd_vel_subscriber_ = rosnode_->subscribe<geometry_msgs::Twist>(command_topic_, 2, &GazeboRosSkidSteerDrive::cmdVelCallback, this);
 
-        cmd_vel_subscriber_ = rosnode_->subscribe(so);
+            //创建新的线程处理
+            //read key board input
+            ROS_INFO("started to create a thread to process keyboard input!");
+            boost::thread f1 = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::scanKeyboard, this));
+            f1.detach();
 
-        odometry_publisher_ = rosnode_->advertise<nav_msgs::Odometry>(odometry_topic_, 1);
+            //read XBOX input
+            ROS_INFO("started to create a thread to process XBOX input!");
+            boost::thread f2 = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::scanXBOX, this));
+            f2.detach();
 
-        //read key board input
-        ROS_INFO("started to create a thread to process keyboard input!");
-        boost::thread f1 = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::scanKeyboard, this));
-        //f1.join();
-        f1.detach();
-        ROS_INFO("create a thread successfully!Attention Please!you should turn on ECHO before EXIT by press ctrl+E!");
-        ROS_INFO("Attention Please!you should turn on ECHO before EXIT by press ctrl+E!");
-        ROS_INFO("Otherwise turn on ECHO by shell command 'stty echo'!");
+            // start custom queue for diff drive
+            //this->callback_queue_thread_ = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::QueueThread, this));
 
-        //read XBOX input
-        ROS_INFO("started to create a thread to process XBOX input!");
-        boost::thread f2 = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::scanXBOX, this));
-        //f.join();
-        f2.detach();
-
-        // start custom queue for diff drive
-        this->callback_queue_thread_ = boost::thread(boost::bind(&GazeboRosSkidSteerDrive::QueueThread, this));
-
-        // listen to the update event (broadcast every simulation iteration)
-        this->update_connection_ = event::Events::ConnectWorldUpdateBegin(
-            boost::bind(&GazeboRosSkidSteerDrive::UpdateChild, this));
-
+            // listen to the update event (broadcast every simulation iteration)
+            this->update_connection_ = event::Events::ConnectWorldUpdateBegin(
+                boost::bind(&GazeboRosSkidSteerDrive::UpdateChild, this));
+        }
     }
 
   // Update the controller
     void GazeboRosSkidSteerDrive::UpdateChild()
     {
-        common::Time current_time = this->world->SimTime();
+        common::Time current_time = this->world->SimTime();//这是Gazebo仿真时间，等于仿真步长乘以步数
         double seconds_since_last_update = (current_time - last_update_time_).Double();
         if(seconds_since_last_update > update_period_)
         {
             publishOdometry(seconds_since_last_update);
-
             // Update robot in case new velocities have been requested
             getWheelVelocities();
             #if GAZEBO_MAJOR_VERSION > 2
@@ -448,7 +432,13 @@ namespace gazebo
             last_update_time_+= common::Time(update_period_);
         }
     }
-
+    /*
+    void GazeboRosSkidSteerDrive::QueueThread()
+    {
+        static const double timeout = 0.01;
+        while(alive_ && rosnode_->ok())
+            queue_.callAvailable(ros::WallDuration(timeout));
+    }
     // Finalize the controller
     void GazeboRosSkidSteerDrive::FiniChild()
     {
@@ -457,8 +447,7 @@ namespace gazebo
         queue_.disable();
         rosnode_->shutdown();
         callback_queue_thread_.join();
-    }
-
+    }*/
     void GazeboRosSkidSteerDrive::getWheelVelocities()
     {
         boost::mutex::scoped_lock scoped_lock(lock);
@@ -480,40 +469,48 @@ namespace gazebo
         rot_ = cmd_msg->angular.z;
     }
 
-    void GazeboRosSkidSteerDrive::QueueThread()
-    {
-        static const double timeout = 0.01;
-        while(alive_ && rosnode_->ok())
-            queue_.callAvailable(ros::WallDuration(timeout));
-    }
-
     void GazeboRosSkidSteerDrive::publishOdometry(double step_time)
     {
+        //这是ROS的时间，如果设置了参数use_sim_time为true，则ROS会使用/clock数据作为时间基准
+        //此处/clock由gazebopublish，因此ROS时间与gazebo仿真时间同步
+        //如果要获得真实时间，或者说操作系统时间，需要使用ros::WallTime::now()
         ros::Time current_time = ros::Time::now();
-        std::string odom_frame =
-        tf::resolve(tf_prefix_, odometry_frame_);
-        std::string base_footprint_frame =
-        tf::resolve(tf_prefix_, robot_base_frame_);
 
         // TODO create some non-perfect odometry!
-        // getting data for base_footprint to odom transform
+        // getting data for robot_base_frame_ to odometry_frame_
         ignition::math::Pose3<double> pose = this->parent->WorldPose();
 
+        //设置累计位姿信息，并使用“path_topic_”Topic发布累计位姿信息，rivz可使用该数据可视化运动轨迹
+        geometry_msgs::PoseStamped this_pose;
+        this_pose.header.frame_id = odometry_frame_;
+        this_pose.header.stamp = current_time;
+        this_pose.pose.position.x = pose.Pos().X();
+        this_pose.pose.position.y = pose.Pos().Y();
+        this_pose.pose.position.z = pose.Pos().Z();
+        this_pose.pose.orientation.x = pose.Rot().X();
+        this_pose.pose.orientation.y = pose.Rot().Y();
+        this_pose.pose.orientation.z = pose.Rot().Z();
+        this_pose.pose.orientation.w = pose.Rot().W();
+        path_.poses.push_back(this_pose);
+        path_publisher_.publish(path_);
+
+        //将odometry_frame_和robot_base_frame_之间的位姿信息广播到tf tree
         tf::Quaternion qt(pose.Rot().X(), pose.Rot().Y(), pose.Rot().Z(), pose.Rot().W());
         tf::Vector3 vt(pose.Pos().X(), pose.Pos().Y(), pose.Pos().Z());
-
-        tf::Transform base_footprint_to_odom(qt, vt);
         if(this->broadcast_tf_)
         {
             transform_broadcaster_->sendTransform(
-            tf::StampedTransform(base_footprint_to_odom, current_time,
-            odom_frame, base_footprint_frame));
+            tf::StampedTransform(tf::Transform(qt, vt), current_time, robot_base_frame_, odometry_frame_));
         }
 
-        // publish odom topic
-        odom_.pose.pose.position.x = pose.Pos().Z();
-        odom_.pose.pose.position.y = pose.Pos().Y();
+        //将odometry_frame_和robot_base_frame_之间的位姿信息利用“odometry_topic_”Topic发布出去
+        odom_.header.stamp = current_time;
+        odom_.header.frame_id = robot_base_frame_;
+        odom_.child_frame_id = odometry_frame_;
 
+        odom_.pose.pose.position.x = pose.Pos().X();
+        odom_.pose.pose.position.y = pose.Pos().Y();
+        odom_.pose.pose.position.z = pose.Pos().Z();
         odom_.pose.pose.orientation.x = pose.Rot().X();
         odom_.pose.pose.orientation.y = pose.Rot().Y();
         odom_.pose.pose.orientation.z = pose.Rot().Z();
@@ -525,25 +522,21 @@ namespace gazebo
         odom_.pose.covariance[28] = 1000000000000.0;
         odom_.pose.covariance[35] = this->covariance_yaw_;
 
-        // get velocity in /odom frame
-        ignition::math::Vector3<double> linear;
+        ignition::math::Vector3<double> linear,angular;
         linear = this->parent->WorldLinearVel();
-        odom_.twist.twist.angular.z = this->parent->WorldAngularVel().Z();
-
-        // convert velocity to child_frame_id (aka base_footprint)
-        float yaw = pose.Rot().Yaw();
-        odom_.twist.twist.linear.x = cosf(yaw) * linear.X() + sinf(yaw) * linear.Y();
-        odom_.twist.twist.linear.y = cosf(yaw) * linear.Y() - sinf(yaw) * linear.X();
+        angular = this->parent->WorldAngularVel();
+        odom_.twist.twist.linear.x = linear.X();
+        odom_.twist.twist.linear.y = linear.Y();
+        odom_.twist.twist.linear.z = linear.Z();
+        odom_.twist.twist.angular.x = angular.X();
+        odom_.twist.twist.angular.y = angular.Y();
+        odom_.twist.twist.angular.z = angular.Z();
         odom_.twist.covariance[0] = this->covariance_x_;
         odom_.twist.covariance[7] = this->covariance_y_;
         odom_.twist.covariance[14] = 1000000000000.0;
         odom_.twist.covariance[21] = 1000000000000.0;
         odom_.twist.covariance[28] = 1000000000000.0;
         odom_.twist.covariance[35] = this->covariance_yaw_;
-
-        odom_.header.stamp = current_time;
-        odom_.header.frame_id = odom_frame;
-        odom_.child_frame_id = base_footprint_frame;
 
         odometry_publisher_.publish(odom_);
     }

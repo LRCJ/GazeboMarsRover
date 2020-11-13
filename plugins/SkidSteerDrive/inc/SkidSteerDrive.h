@@ -39,10 +39,15 @@
 #ifndef GAZEBO_ROS_SKID_STEER_DRIVE_H_
 #define GAZEBO_ROS_SKID_STEER_DRIVE_H_
 
-#include <map>
-
+//gazebo
 #include <gazebo/common/common.hh>
 #include <gazebo/physics/physics.hh>
+
+//math
+//#include <gazebo/math/gzmath.hh>
+//#include <ignition/math4/ignition/math.hh>
+#include <ignition/math/Pose3.hh>
+#include <ignition/math/Vector3.hh>
 
 // ROS
 #include <ros/ros.h>
@@ -50,15 +55,16 @@
 #include <tf/transform_listener.h>
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
-#include <nav_msgs/OccupancyGrid.h>
+#include <nav_msgs/Path.h>
 
-// Custom Callback Queue
+//Custom Callback Queue
 #include <ros/callback_queue.h>
 #include <ros/advertise_options.h>
 
 // Boost
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
+#include <boost/thread/mutex.hpp>
 
 //for keyboard input
 #include <termio.h>
@@ -80,7 +86,7 @@ namespace gazebo
 
         protected:
             virtual void UpdateChild();
-            virtual void FiniChild();
+            //virtual void FiniChild();
 
         private:
             void publishOdometry(double step_time);
@@ -107,9 +113,11 @@ namespace gazebo
             // ROS STUFF
             ros::NodeHandle* rosnode_;
             ros::Publisher odometry_publisher_;
+            ros::Publisher path_publisher_;
             ros::Subscriber cmd_vel_subscriber_;
             tf::TransformBroadcaster *transform_broadcaster_;
             nav_msgs::Odometry odom_;
+            nav_msgs::Path path_;
             std::string tf_prefix_;
             bool broadcast_tf_;
 
@@ -118,20 +126,21 @@ namespace gazebo
             std::string robot_namespace_;
             std::string command_topic_;
             std::string odometry_topic_;
+            std::string path_topic_;
             std::string odometry_frame_;
             std::string robot_base_frame_;
 
             // Custom Callback Queue
-            ros::CallbackQueue queue_;
-            boost::thread callback_queue_thread_;
-            void QueueThread();
+            //ros::CallbackQueue queue_;
+            //boost::thread callback_queue_thread_;
+            //void QueueThread();
 
             // DiffDrive stuff
             void cmdVelCallback(const geometry_msgs::Twist::ConstPtr& cmd_msg);
 
             double x_;
             double rot_;
-            bool alive_;
+            //bool alive_;
 
             // Update Rate
             double update_rate_;

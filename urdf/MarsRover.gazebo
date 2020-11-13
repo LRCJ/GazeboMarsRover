@@ -158,13 +158,12 @@
 		<!--this plugin publish topic '/joint_states'-->
 		<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
 			<jointName>joint_body_DiffBar,joint_body_LeftMainRocker,joint_LeftMainRocker_LeftViceRocker,joint_LeftViceRocker_LeftMiddleWheel,joint_LeftViceRocker_LeftRearWheel,joint_LeftMainRocker_LeftFrontWheel,joint_body_RightMainRocker,joint_RightMainRocker_RightViceRocker,joint_RightViceRocker_RightMiddleWheel,joint_RightViceRocker_RightRearWheel,joint_RightMainRocker_RightFrontWheel</jointName>
-			<updateRate>50.0</updateRate>
+			<updateRate>100.0</updateRate>
 		</plugin>
 
 		<!--this plugin drive rover's wheel for motion-->
 		<plugin name="skid_steer_drive_controller" filename="$(find mars_rover)/plugins/SkidSteerDrive/build/libSkidSteerDrive.so">
 			<updateRate>100.0</updateRate>
-			<robotNamespace></robotNamespace>
 			<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
 			<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
 			<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
@@ -172,11 +171,11 @@
 			<wheelSeparation>1.08</wheelSeparation><!--wheel distance between L&R-->
 			<wheelDiameter>0.3</wheelDiameter>
 			<commandTopic>cmd_vel</commandTopic>
+			<PathTopic>path</PathTopic>
 			<odometryTopic>odom</odometryTopic>
-			<robotBaseFrame>base_footprint</robotBaseFrame>
-			<odometryFrame>odom</odometryFrame>
+			<robotBaseFrame>world</robotBaseFrame>
+			<odometryFrame>body</odometryFrame>
 			<torque>100</torque>
-			<topicName>cmd_vel</topicName>
 			<broadcastTF>1</broadcastTF>
 			<covariance_x>0.0001</covariance_x>
 			<covariance_y>0.0001</covariance_y>
