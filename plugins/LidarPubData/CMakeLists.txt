@@ -26,20 +26,20 @@ link_directories(
   ${GAZEBO_LIBRARY_DIRS}
 )
 
-add_library(LidarPubData src/LidarPubData.cpp)
-target_link_libraries(LidarPubData
+add_library(${PROJECT_NAME} src/LidarPubData.cpp)
+target_link_libraries(${PROJECT_NAME}
   ${catkin_LIBRARIES}
   ${GAZEBO_LIBRARIES}
-  RayPlugin
+  RayPlugin #必须要加上
 )
 
-add_library(LidarPubDataGpu src/LidarPubData.cpp)
-target_link_libraries(LidarPubDataGpu
-  ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
-  GpuRayPlugin
-)
-target_compile_definitions(LidarPubDataGpu PRIVATE GAZEBO_GPU_RAY=1)
+#add_library(LidarPubDataGpu src/LidarPubData.cpp)
+#target_link_libraries(LidarPubDataGpu
+#  ${catkin_LIBRARIES}
+#  ${GAZEBO_LIBRARIES}
+#  GpuRayPlugin
+#)
+#target_compile_definitions(LidarPubDataGpu PRIVATE GAZEBO_GPU_RAY=1)
 
 #install(TARGETS gazebo_ros_velodyne_laser gazebo_ros_velodyne_gpu_laser
 #        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}

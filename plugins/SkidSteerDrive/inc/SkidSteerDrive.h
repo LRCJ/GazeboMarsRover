@@ -48,6 +48,8 @@
 //#include <ignition/math4/ignition/math.hh>
 #include <ignition/math/Pose3.hh>
 #include <ignition/math/Vector3.hh>
+#include <Eigen/Core>
+#include <Eigen/Geometry>
 
 // ROS
 #include <ros/ros.h>
@@ -150,6 +152,8 @@ namespace gazebo
             double covariance_x_;
             double covariance_y_;
             double covariance_yaw_;
+
+            Eigen::Isometry3d T_bp_ = Eigen::Isometry3d::Identity();
 
     };
 }

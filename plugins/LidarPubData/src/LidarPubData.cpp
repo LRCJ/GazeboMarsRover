@@ -72,6 +72,74 @@ GZ_REGISTER_SENSOR_PLUGIN(GazeboRosVelodyneLaser)
 // Constructor
 GazeboRosVelodyneLaser::GazeboRosVelodyneLaser() : nh_(NULL), gaussian_noise_(0), min_range_(0), max_range_(0)
 {
+    //simulate the light time of PandarQT
+    laserQTOffset_[0] = 10.0f + 2.31f;//us
+    laserQTOffset_[1] = 10.0f + 4.37f;
+    laserQTOffset_[2] = 10.0f + 6.43f;
+    laserQTOffset_[3] = 10.0f + 8.49f;
+    laserQTOffset_[4] = 10.0f + 10.54f;
+    laserQTOffset_[5] = 10.0f + 12.60f;
+    laserQTOffset_[6] = 10.0f + 14.66f;
+    laserQTOffset_[7] = 10.0f + 16.71f;
+    laserQTOffset_[8] = 10.0f + 19.16f;
+    laserQTOffset_[9] = 10.0f + 21.22f;
+    laserQTOffset_[10] = 10.0f + 23.28f;
+    laserQTOffset_[11] = 10.0f + 25.34f;
+    laserQTOffset_[12] = 10.0f + 27.39f;
+    laserQTOffset_[13] = 10.0f + 29.45f;
+    laserQTOffset_[14] = 10.0f + 31.50f;
+    laserQTOffset_[15] = 10.0f + 33.56f;
+
+    laserQTOffset_[16] = 10.0f + 36.61f;
+    laserQTOffset_[17] = 10.0f + 38.67f;
+    laserQTOffset_[18] = 10.0f + 40.73f;
+    laserQTOffset_[19] = 10.0f + 42.78f;
+    laserQTOffset_[20] = 10.0f + 44.84f;
+    laserQTOffset_[21] = 10.0f + 46.90f;
+    laserQTOffset_[22] = 10.0f + 48.95f;
+    laserQTOffset_[23] = 10.0f + 51.01f;
+    laserQTOffset_[24] = 10.0f + 53.45f;
+    laserQTOffset_[25] = 10.0f + 55.52f;
+    laserQTOffset_[26] = 10.0f + 57.58f;
+    laserQTOffset_[27] = 10.0f + 59.63f;
+    laserQTOffset_[28] = 10.0f + 61.69f;
+    laserQTOffset_[29] = 10.0f + 63.74f;
+    laserQTOffset_[30] = 10.0f + 65.80f;
+    laserQTOffset_[31] = 10.0f + 67.86f;
+
+    laserQTOffset_[32] = 10.0f + 70.90f;
+    laserQTOffset_[33] = 10.0f + 72.97f;
+    laserQTOffset_[34] = 10.0f + 75.02f;
+    laserQTOffset_[35] = 10.0f + 77.08f;
+    laserQTOffset_[36] = 10.0f + 79.14f;
+    laserQTOffset_[37] = 10.0f + 81.19f;
+    laserQTOffset_[38] = 10.0f + 83.25f;
+    laserQTOffset_[39] = 10.0f + 85.30f;
+    laserQTOffset_[40] = 10.0f + 87.75f;
+    laserQTOffset_[41] = 10.0f + 89.82f;
+    laserQTOffset_[42] = 10.0f + 91.87f;
+    laserQTOffset_[43] = 10.0f + 93.93f;
+    laserQTOffset_[44] = 10.0f + 95.98f;
+    laserQTOffset_[45] = 10.0f + 98.04f;
+    laserQTOffset_[46] = 10.0f + 100.10f;
+    laserQTOffset_[47] = 10.0f + 102.15f;
+
+    laserQTOffset_[48] = 10.0f + 105.20f;
+    laserQTOffset_[49] = 10.0f + 107.26f;
+    laserQTOffset_[50] = 10.0f + 109.32f;
+    laserQTOffset_[51] = 10.0f + 111.38f;
+    laserQTOffset_[52] = 10.0f + 113.43f;
+    laserQTOffset_[53] = 10.0f + 115.49f;
+    laserQTOffset_[54] = 10.0f + 117.54f;
+    laserQTOffset_[55] = 10.0f + 119.60f;
+    laserQTOffset_[56] = 10.0f + 122.05f;
+    laserQTOffset_[57] = 10.0f + 124.11f;
+    laserQTOffset_[58] = 10.0f + 126.17f;
+    laserQTOffset_[59] = 10.0f + 128.22f;
+    laserQTOffset_[60] = 10.0f + 130.28f;
+    laserQTOffset_[61] = 10.0f + 132.34f;
+    laserQTOffset_[62] = 10.0f + 134.39f;
+    laserQTOffset_[63] = 10.0f + 136.45f;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -107,59 +175,106 @@ void GazeboRosVelodyneLaser::Load(sensors::SensorPtr _parent, sdf::ElementPtr _s
 #else
   parent_ray_sensor_ = boost::dynamic_pointer_cast<sensors::RaySensor>(_parent);
 #endif
-  if (!parent_ray_sensor_) {
+  if (!parent_ray_sensor_)
     gzthrow("GazeboRosVelodyne" << STR_Gpu << "Laser controller requires a " << STR_Gpu << "Ray Sensor as its parent");
-  }
 
   robot_namespace_ = "/";
-  if (_sdf->HasElement("robotNamespace")) {
+  if (_sdf->HasElement("robotNamespace"))
     robot_namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
-  }
 
-  if (!_sdf->HasElement("frameName")) {
-    ROS_INFO("Velodyne laser plugin missing <frameName>, defaults to /world");
+  if (!_sdf->HasElement("frameName"))
+  {
+    ROS_INFO("Lidar plugin missing <frameName>, defaults to /world");
     frame_name_ = "/world";
-  } else {
+  }
+  else
     frame_name_ = _sdf->GetElement("frameName")->Get<std::string>();
-  }
 
-  if (!_sdf->HasElement("min_range")) {
-    ROS_INFO("Velodyne laser plugin missing <min_range>, defaults to 0");
+  if (!_sdf->HasElement("min_range"))
+  {
+    ROS_INFO("Lidar plugin missing <min_range>, defaults to 0");
     min_range_ = 0;
-  } else {
+  }
+  else
     min_range_ = _sdf->GetElement("min_range")->Get<double>();
-  }
 
-  if (!_sdf->HasElement("max_range")) {
-    ROS_INFO("Velodyne laser plugin missing <max_range>, defaults to infinity");
+  if (!_sdf->HasElement("max_range"))
+  {
+    ROS_INFO("Lidar plugin missing <max_range>, defaults to infinity");
     max_range_ = INFINITY;
-  } else {
-    max_range_ = _sdf->GetElement("max_range")->Get<double>();
   }
+  else
+    max_range_ = _sdf->GetElement("max_range")->Get<double>();
 
   min_intensity_ = std::numeric_limits<double>::lowest();
-  if (!_sdf->HasElement("min_intensity")) {
-    ROS_INFO("Velodyne laser plugin missing <min_intensity>, defaults to no clipping");
-  } else {
+  if (!_sdf->HasElement("min_intensity"))
+    ROS_INFO("Lidar plugin missing <min_intensity>, defaults to no clipping");
+  else
     min_intensity_ = _sdf->GetElement("min_intensity")->Get<double>();
-  }
 
-  if (!_sdf->HasElement("topicName")) {
-    ROS_INFO("Velodyne laser plugin missing <topicName>, defaults to /points");
+  if (!_sdf->HasElement("topicName"))
+  {
+    ROS_INFO("Lidar plugin missing <topicName>, defaults to /points");
     topic_name_ = "/points";
-  } else {
+  }
+  else
     topic_name_ = _sdf->GetElement("topicName")->Get<std::string>();
+
+  if (!_sdf->HasElement("gaussianNoise"))
+  {
+    ROS_INFO("Lidar plugin missing <gaussianNoise>, defaults to 0.0");
+    gaussian_noise_ = 0;
+  }
+  else
+    gaussian_noise_ = _sdf->GetElement("gaussianNoise")->Get<double>();
+
+  if (!_sdf->HasElement("ignoreAzimuthAngleUp"))
+  {
+    ignoreAzimuthAngleUp_ = 360.0;
+    ROS_INFO("Lidar plugin missing <ignoreAzimuthAngleUp>, defaults to %lf",ignoreAzimuthAngleUp_);
+  }
+  else
+  {
+    ignoreAzimuthAngleUp_ = _sdf->GetElement("ignoreAzimuthAngleUp")->Get<double>();
+    ROS_INFO("Lidar plugin set <ignoreAzimuthAngleUp> to %lf!",ignoreAzimuthAngleUp_);
   }
 
-  if (!_sdf->HasElement("gaussianNoise")) {
-    ROS_INFO("Velodyne laser plugin missing <gaussianNoise>, defaults to 0.0");
-    gaussian_noise_ = 0;
-  } else {
-    gaussian_noise_ = _sdf->GetElement("gaussianNoise")->Get<double>();
+  if (!_sdf->HasElement("ignoreAzimuthAngleLow"))
+  {
+    ignoreAzimuthAngleLow_ = 0.0;
+    ROS_INFO("Lidar plugin missing <ignoreAzimuthAngleLow>, defaults to %lf",ignoreAzimuthAngleLow_);
+  }
+  else
+  {
+    ignoreAzimuthAngleLow_ = _sdf->GetElement("ignoreAzimuthAngleLow")->Get<double>();
+    ROS_INFO("Lidar plugin set <ignoreAzimuthAngleLow> to %lf!",ignoreAzimuthAngleLow_);
+  }
+
+  if (!_sdf->HasElement("ignoreScanIDUp"))
+  {
+    ignoreScanIDUp_ = 63;
+    ROS_INFO("Lidar plugin missing <ignoreScanIDUp>, defaults to %d",ignoreScanIDUp_);
+  }
+  else
+  {
+    ignoreScanIDUp_ = _sdf->GetElement("ignoreScanIDUp")->Get<int>();
+    ROS_INFO("Lidar plugin set <ignoreScanIDUp> to %d!",ignoreScanIDUp_);
+  }
+
+  if (!_sdf->HasElement("ignoreScanIDLow"))
+  {
+    ignoreScanIDLow_ = 0;
+    ROS_INFO("Lidar plugin missing <ignoreScanIDLow>, defaults to %d",ignoreScanIDLow_);
+  }
+  else
+  {
+    ignoreScanIDLow_ = _sdf->GetElement("ignoreScanIDLow")->Get<int>();
+    ROS_INFO("Lidar plugin set <ignoreScanIDLow> to %d!",ignoreScanIDLow_);
   }
 
   // Make sure the ROS node for Gazebo has already been initialized
-  if (!ros::isInitialized()) {
+  if (!ros::isInitialized())
+  {
     ROS_FATAL_STREAM("A ROS node for Gazebo has not been initialized, unable to load plugin. "
       << "Load the Gazebo system plugin 'libgazebo_ros_api_plugin.so' in the gazebo_ros package)");
     return;
@@ -235,10 +350,10 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
   const double minRange = parent_ray_sensor_->RangeMin();
 
   const int rayCount = parent_ray_sensor_->RayCount();
-  const int rangeCount = parent_ray_sensor_->RangeCount();
+  const int rangeCount = parent_ray_sensor_->RangeCount();//水平方向，水平视场角除以水平角分辨率，如360/0.6=600
 
   const int verticalRayCount = parent_ray_sensor_->VerticalRayCount();
-  const int verticalRangeCount = parent_ray_sensor_->VerticalRangeCount();
+  const int verticalRangeCount = parent_ray_sensor_->VerticalRangeCount();//垂直方向，如64线，128线等
 
   const ignition::math::Angle verticalMaxAngle = parent_ray_sensor_->VerticalAngleMax();
   const ignition::math::Angle verticalMinAngle = parent_ray_sensor_->VerticalAngleMin();
@@ -267,11 +382,11 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
   const double MIN_INTENSITY = min_intensity_;
 
   // Populate message fields
-  const uint32_t POINT_STEP = 32;
+  const uint32_t POINT_STEP = 48;
   sensor_msgs::PointCloud2 msg;
   msg.header.frame_id = frame_name_;
   msg.header.stamp = ros::Time(_msg->time().sec(), _msg->time().nsec());
-  msg.fields.resize(5);
+  msg.fields.resize(6);
   msg.fields[0].name = "x";
   msg.fields[0].offset = 0;
   msg.fields[0].datatype = sensor_msgs::PointField::FLOAT32;
@@ -286,18 +401,24 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
   msg.fields[2].count = 1;
   msg.fields[3].name = "intensity";
   msg.fields[3].offset = 16;
-  msg.fields[3].datatype = sensor_msgs::PointField::FLOAT32;
+  msg.fields[3].datatype = sensor_msgs::PointField::UINT8;
   msg.fields[3].count = 1;
-  msg.fields[4].name = "ring";
-  msg.fields[4].offset = 20;
-  msg.fields[4].datatype = sensor_msgs::PointField::UINT16;
+  msg.fields[4].name = "timestamp";
+  msg.fields[4].offset = 24;
+  msg.fields[4].datatype = sensor_msgs::PointField::FLOAT64;
   msg.fields[4].count = 1;
+  msg.fields[5].name = "ring";
+  msg.fields[5].offset = 32;
+  msg.fields[5].datatype = sensor_msgs::PointField::UINT16;
+  msg.fields[5].count = 1;
   msg.data.resize(verticalRangeCount * rangeCount * POINT_STEP);
 
   int i, j;
   uint8_t *ptr = msg.data.data();
-  for (i = 0; i < rangeCount; i++) {
-    for (j = 0; j < verticalRangeCount; j++) {
+  for (i = 0; i < rangeCount; i++)//rangeCount = 600
+  {
+    for (j = 0; j < verticalRangeCount; j++)//verticalRangeCount = 64
+    {
 
       // Range
       double r = _msg->scan().ranges(i + j * rangeCount);
@@ -305,30 +426,26 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
       double intensity = _msg->scan().intensities(i + j * rangeCount);
       // Ignore points that lay outside range bands or optionally, beneath a
       // minimum intensity level.
-      if ((MIN_RANGE >= r) || (r >= MAX_RANGE) || (intensity < MIN_INTENSITY) ) {
+      if ((MIN_RANGE >= r) || (r >= MAX_RANGE) || (intensity < MIN_INTENSITY) )
         continue;
-      }
 
       // Noise
-      if (gaussian_noise_ != 0.0) {
+      if (gaussian_noise_ != 0.0)
         r += gaussianKernel(0,gaussian_noise_);
-      }
 
       // Get angles of ray to get xyz for point
       double yAngle;
       double pAngle;
 
-      if (rangeCount > 1) {
+      if (rangeCount > 1)
         yAngle = i * yDiff / (rangeCount -1) + minAngle.Radian();
-      } else {
+      else
         yAngle = minAngle.Radian();
-      }
 
-      if (verticalRayCount > 1) {
+      if (verticalRayCount > 1)
         pAngle = j * pDiff / (verticalRangeCount -1) + verticalMinAngle.Radian();
-      } else {
+      else
         pAngle = verticalMinAngle.Radian();
-      }
 
       // pAngle is rotated by yAngle:
       if ((MIN_RANGE < r) && (r < MAX_RANGE))
@@ -336,8 +453,17 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
         float x = r * cos(pAngle) * cos(yAngle);
         float y = r * cos(pAngle) * sin(yAngle);
         float z = r * sin(pAngle);
-        if( (x<1.0&&x>-1.2) && (y<0.8&&y>-1.0) && (z<0.0&&z>-1.5) )
+
+        // //剔除一定范围内的点
+        // if( (x<1.0&&x>-1.2) && (y<0.8&&y>-1.0) && (z<0.0&&z>-1.5) )
+        //   continue;
+        //剔除一定方位角范围的点
+        //水平方位角以绕Z轴由X轴转至Y轴为正方向，X轴正方向为起始，需要注意的是Gazebo仿真里面Lidar的角度以X轴负方向为起始
+        if(i>(ignoreAzimuthAngleUp_/360.0*rangeCount)||i<(ignoreAzimuthAngleLow_/360.0*rangeCount))
           continue;
+        if(j>ignoreScanIDUp_||j<ignoreScanIDLow_)
+          continue;
+
         *((float*)(ptr + 0)) = x;
         *((float*)(ptr + 4)) = y;
 #if GAZEBO_MAJOR_VERSION > 2
@@ -345,11 +471,12 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
 #else
         *((float*)(ptr + 8)) = -z;
 #endif
-        *((float*)(ptr + 16)) = intensity;
+        *((uint8_t*)(ptr + 16)) = intensity;
+        *((double*)(ptr + 24)) = _msg->time().sec() + 1.0e-9*_msg->time().nsec() + (laserQTOffset_[j] + 1.0e5/rangeCount*i)/1.0e6;
 #if GAZEBO_MAJOR_VERSION > 2
-        *((uint16_t*)(ptr + 20)) = j; // ring
+        *((uint16_t*)(ptr + 32)) = j; // ring
 #else
-        *((uint16_t*)(ptr + 20)) = verticalRangeCount - 1 - j; // ring
+        *((uint16_t*)(ptr + 32)) = verticalRangeCount - 1 - j; // ring
 #endif
         ptr += POINT_STEP;
       }

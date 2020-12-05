@@ -404,6 +404,10 @@ namespace gazebo
             // listen to the update event (broadcast every simulation iteration)
             this->update_connection_ = event::Events::ConnectWorldUpdateBegin(
                 boost::bind(&GazeboRosSkidSteerDrive::UpdateChild, this));
+
+            //body->PandarQT，激光雷达PandarQT在body坐标系下的位姿
+            T_bp_.rotate(Eigen::Quaterniond(0.683, -0.683, 0.183, -0.183));
+            T_bp_.pretranslate(Eigen::Vector3d(.677, 0.370, 0.000));
         }
     }
 
@@ -481,16 +485,23 @@ namespace gazebo
         ignition::math::Pose3<double> pose = this->parent->WorldPose();
 
         //设置累计位姿信息，并使用“path_topic_”Topic发布累计位姿信息，rivz可使用该数据可视化运动轨迹
+        //该位姿信息是车体body相对于世界坐标系world而言的，通过位姿转换可将轨迹转换为Lidar的轨迹
         geometry_msgs::PoseStamped this_pose;
-        this_pose.header.frame_id = odometry_frame_;
+        this_pose.header.frame_id = "PandarQT";
         this_pose.header.stamp = current_time;
-        this_pose.pose.position.x = pose.Pos().X();
-        this_pose.pose.position.y = pose.Pos().Y();
-        this_pose.pose.position.z = pose.Pos().Z();
-        this_pose.pose.orientation.x = pose.Rot().X();
-        this_pose.pose.orientation.y = pose.Rot().Y();
-        this_pose.pose.orientation.z = pose.Rot().Z();
-        this_pose.pose.orientation.w = pose.Rot().W();
+        //world->body
+        Eigen::Isometry3d T_wb = Eigen::Isometry3d::Identity();
+        T_wb.rotate(Eigen::Quaterniond(pose.Rot().W(),pose.Rot().X(),pose.Rot().Y(),pose.Rot().Z()));
+        T_wb.pretranslate(Eigen::Vector3d(pose.Pos().X(),pose.Pos().Y(),pose.Pos().Z()));
+        //world->PandarQT
+        Eigen::Isometry3d T_wp = T_wb*T_bp_;//右乘，T_bp_是在body坐标系下Lidar的位姿描述
+        this_pose.pose.position.x =  T_wp.translation()(0);
+        this_pose.pose.position.y =  T_wp.translation()(1);
+        this_pose.pose.position.z =  T_wp.translation()(2);
+        this_pose.pose.orientation.x = Eigen::Quaterniond(T_wp.rotation()).x();
+        this_pose.pose.orientation.y = Eigen::Quaterniond(T_wp.rotation()).y();
+        this_pose.pose.orientation.z = Eigen::Quaterniond(T_wp.rotation()).z();
+        this_pose.pose.orientation.w = Eigen::Quaterniond(T_wp.rotation()).w();
         path_.poses.push_back(this_pose);
         path_publisher_.publish(path_);
 

@@ -5,7 +5,7 @@
         <atmosphere type='adiabatic'/>
         <gui fullscreen='0'>
             <camera name='user_camera'>
-                <pose frame=''>5 -5 5 -0 0.523598775 2.35619449</pose>
+                <pose frame=''>34 24 8 -0 0.523598775 2.35619449</pose>
                 <view_controller>orbit</view_controller>
                 <projection_type>perspective</projection_type>
             </camera>

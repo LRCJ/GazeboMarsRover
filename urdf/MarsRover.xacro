@@ -525,6 +525,7 @@
       <child link="${LidarName}"/>
     </joint>
     
-    <xacro:include filename="$(find mars_rover)/urdf/PandarQT.xacro"/>
+    <xacro:include filename="$(find mars_rover)/urdf/Sensors.xacro"/>
     <xacro:PandarQT link="${LidarName}" topic="${LidarDataTopicName}" hz="${LidarHz}" lasers="${LidarLasers}" samples="${LidarSamples}" visual="${LidarBeamVisual}"></xacro:PandarQT>
+    <xacro:IMU link="${LidarName}" pitch="${0}" gaussianNoise="0.0"></xacro:IMU>
 </robot>

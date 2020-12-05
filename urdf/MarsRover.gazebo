@@ -162,7 +162,7 @@
 		</plugin>
 
 		<!--this plugin drive rover's wheel for motion-->
-		<plugin name="skid_steer_drive_controller" filename="$(find mars_rover)/plugins/SkidSteerDrive/build/libSkidSteerDrive.so">
+		<plugin name="skid_steer_drive_controller" filename="$(find mars_rover)/plugins/SkidSteerDrive/build/libSkidSteerDrive_plugins.so">
 			<updateRate>100.0</updateRate>
 			<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
 			<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
@@ -171,7 +171,7 @@
 			<wheelSeparation>1.08</wheelSeparation><!--wheel distance between L&R-->
 			<wheelDiameter>0.3</wheelDiameter>
 			<commandTopic>cmd_vel</commandTopic>
-			<PathTopic>path</PathTopic>
+			<PathTopic>abs_path</PathTopic>
 			<odometryTopic>odom</odometryTopic>
 			<robotBaseFrame>world</robotBaseFrame>
 			<odometryFrame>body</odometryFrame>

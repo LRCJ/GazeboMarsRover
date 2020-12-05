@@ -7,7 +7,7 @@ int xbox_open(const char *file_name)
     xbox_fd = open(file_name, O_RDONLY);  
     if (xbox_fd < 0)  
     {  
-        perror("open");  
+        //perror("open");  
         return -1;  
     }  
 

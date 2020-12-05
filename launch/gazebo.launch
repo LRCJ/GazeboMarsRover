@@ -61,7 +61,7 @@
   </group>
   
   <!--**spawn a model**-->
-  <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" args="-z 1.0 -R 1.570796327 -urdf -param robot_description -model MarsRover" respawn="false" output="$(arg GazeboInfo)" />
+  <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" args="-x 28 -y 28 -z 3.7 -R 1.570796327 -Y 0.785398163 -urdf -param robot_description -model MarsRover" respawn="false" output="$(arg GazeboInfo)" />
   
 
   <!--**pulish topic to rviz model for controlling every joint**-->
@@ -83,6 +83,6 @@
 
 
   <!--process lidar data-->
-  <node pkg="proc_lidar_data" type="proc_lidar_data" name="ShowLidarPointCloud" args="$(arg LidarDataTopicName)" output="$(arg LidarInfo)" />
+  <!--node pkg="proc_lidar_data" type="proc_lidar_data" name="ShowLidarPointCloud" args="$(arg LidarDataTopicName)" output="$(arg LidarInfo)" /-->
 
 </launch>

@@ -117,6 +117,18 @@ namespace gazebo
     /// \brief Gaussian noise
     private: double gaussian_noise_;
 
+    /// \brief ignore this points which Azimuth greater than ignoreAzimuthAngleUp
+    private: double ignoreAzimuthAngleUp_;
+
+    /// \brief ignore this points which Azimuth less than ignoreAzimuthAngleUp
+    private: double ignoreAzimuthAngleLow_;
+
+    /// \brief ignore this points which scan ID greater than ignoreAzimuthAngleUp
+    private: int ignoreScanIDUp_;
+
+    /// \brief ignore this points which scan ID less than ignoreAzimuthAngleUp
+    private: int ignoreScanIDLow_; 
+
     /// \brief Gaussian noise generator
     private: static double gaussianKernel(double mu, double sigma)
     {
@@ -142,6 +154,10 @@ namespace gazebo
     private: gazebo::transport::NodePtr gazebo_node_;
     private: gazebo::transport::SubscriberPtr sub_;
     private: void OnScan(const ConstLaserScanStampedPtr &_msg);
+
+    private:
+    //simulate the light time of PandarQT
+    float laserQTOffset_[64];
 
   };
 
