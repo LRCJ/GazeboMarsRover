@@ -406,8 +406,12 @@ namespace gazebo
                 boost::bind(&GazeboRosSkidSteerDrive::UpdateChild, this));
 
             //body->PandarQT，激光雷达PandarQT在body坐标系下的位姿
-            T_bp_.rotate(Eigen::Quaterniond(0.683, -0.683, 0.183, -0.183));
-            T_bp_.pretranslate(Eigen::Vector3d(.677, 0.370, 0.000));
+            // //30度
+            // T_bp_.rotate(Eigen::Quaterniond(0.683, -0.683, 0.183, -0.183));
+            // T_bp_.pretranslate(Eigen::Vector3d(.677, 0.370, 0.000));
+            //65度
+            T_bp_.rotate(Eigen::Quaterniond(0.596, -0.596, 0.380, -0.380));
+            T_bp_.pretranslate(Eigen::Vector3d(0.716, 0.361, 0.000));
         }
     }
 

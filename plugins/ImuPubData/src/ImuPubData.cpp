@@ -55,7 +55,9 @@ void gazebo::GazeboRosImuSensor::Load(gazebo::sensors::SensorPtr sensor_, sdf::E
 
   node = new ros::NodeHandle(this->robot_namespace);
 
-  imu_data_publisher = node->advertise<sensor_msgs::Imu>(topic_name,1);
+  imu_data_publisher = node->advertise<sensor_msgs::Imu>(topic_name,2);
+  imu_data_angular_vel = node->advertise<geometry_msgs::Vector3>(topic_name+"/angular_velocity",2);
+  imu_data_linear_acc = node->advertise<geometry_msgs::Vector3>(topic_name+"/linear_acc",2);
 
   connection = gazebo::event::Events::ConnectWorldUpdateBegin(boost::bind(&GazeboRosImuSensor::UpdateChild, this, _1));
 
@@ -108,6 +110,8 @@ void gazebo::GazeboRosImuSensor::UpdateChild(const gazebo::common::UpdateInfo &/
 
     //publishing data
     imu_data_publisher.publish(imu_msg);
+    imu_data_angular_vel.publish(imu_msg.angular_velocity);
+    imu_data_linear_acc.publish(imu_msg.linear_acceleration);
 
     ros::spinOnce();
   }

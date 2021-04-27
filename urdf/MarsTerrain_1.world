@@ -64,7 +64,8 @@
                     <pose>0 0 0 0 0 0</pose>
                     <geometry>
                         <mesh>
-                            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/urdf_test_1/meshes/path/mars_path_simple1.dae</uri>
+                            <!--uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/urdf_test_1/meshes/path/mars_path_simple1.dae</uri-->
+                            <uri>/home/liaoren/Desktop/Blender/MarsTerrain/DTEEC_050438_1890_051071_1890_Nili Patera Monitoring_10.dae</uri>
                         </mesh>
                     </geometry>
                 </visual>
@@ -74,7 +75,8 @@
                     <pose>0 0 0 0 0 0</pose>
                     <geometry>
                         <mesh>
-                            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/urdf_test_1/meshes/path/mars_path_simple1.dae</uri>
+                            <!--uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/urdf_test_1/meshes/path/mars_path_simple1.dae</uri-->
+                            <uri>/home/liaoren/Desktop/Blender/MarsTerrain/DTEEC_050438_1890_051071_1890_Nili Patera Monitoring_10.dae</uri>
                         </mesh>
                     </geometry>
                     <surface>
@@ -84,7 +86,7 @@
                         </bounce>
                         <friction>
                             <ode>
-                                <mu>1.0</mu>
+                                <mu>0.5</mu>
                             </ode>
                         </friction>
                         <contact>

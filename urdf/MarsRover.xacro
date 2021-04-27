@@ -6,7 +6,7 @@
   name="MarsRover">
   <xacro:include filename="$(find mars_rover)/urdf/MarsRover.gazebo" />
   <xacro:property name="PI" value="3.141592654" />
-  <xacro:property name="LidarAngle" value="${PI/6}" />
+  <xacro:property name="LidarAngle" value="${PI/180*65}" />
   <xacro:property name="LidarHeight" value="-0.0" />
   <xacro:property name="LidarName" value="PandarQT" />
   <xacro:property name="LidarDataTopicName" value="PandarQT_Data" />

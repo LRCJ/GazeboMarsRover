@@ -46,7 +46,7 @@
       double GuassianKernel(double mu, double sigma);
 
       ros::NodeHandle* node;
-      ros::Publisher imu_data_publisher;
+      ros::Publisher imu_data_publisher,imu_data_angular_vel,imu_data_linear_acc;
       sensor_msgs::Imu imu_msg;
 
       common::Time last_time;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="PandarQT_LiDAR">
   <xacro:property name="PI" value="3.1415926535897931" />
-  <xacro:macro name="PandarQT" params="link:=base_link topic:=PandarQT_Data hz:=10 lasers:=64 samples:=2187 min_range:=0.8 max_range:=30.0 min_angle_h:=-180 max_angle_h:=180 min_angle_v:=-52.1 max_angle_v:=52.1 resolution:=0.02 noise:=0.008 visual:=true gpu:=false">
+  <xacro:macro name="PandarQT" params="link:=base_link topic:=PandarQT_Data hz:=10 lasers:=64 samples:=2187 min_range:=0.8 max_range:=30.0 min_angle_h:=-180 max_angle_h:=180 min_angle_v:=-52.1 max_angle_v:=52.1 resolution:=0.02 noise:=0.00 visual:=true gpu:=false">
 
     <!-- Gazebo requires the velodyne_gazebo_plugins package -->
     <gazebo reference="${link}">
@@ -43,7 +43,7 @@
             </noise>
           </ray>
           <!--该角度以绕Z轴由X轴转至Y轴为正方向，X轴正方向为起始，Gazebo仿真里面Lidar的角度以X轴负方向为起始 -->
-          <plugin name="LidarPubData" filename="$(find mars_rover)/plugins/LidarPubData/build/libLidarPubData.so">
+          <plugin name="LidarPubData" filename="$(find mars_rover)/plugins/LidarPubData/build/libLidarPubData_plugins.so">
             <topicName>${topic}</topicName>
             <frameName>${link}</frameName>
             <min_range>${min_range}</min_range>
@@ -91,7 +91,7 @@
             <noise>
               <type>gaussian</type>
               <mean>0.0</mean>
-              <stddev>0.0</stddev>
+              <stddev>0.01</stddev>
             </noise>
           </ray>
           <plugin name="LidarPubData" filename="$(find mars_rover)/plugins/LidarPubData/build/libLidarPubData_plugins.so">
@@ -101,10 +101,10 @@
             <max_range>${max_range}</max_range>
             <gaussianNoise>${noise}</gaussianNoise>
             <min_intensity>0</min_intensity>
-            <ignoreAzimuthAngleUp>320</ignoreAzimuthAngleUp>
-            <ignoreAzimuthAngleLow>40</ignoreAzimuthAngleLow>
-            <ignoreScanIDUp>44</ignoreScanIDUp>
-            <ignoreScanIDLow>12</ignoreScanIDLow>
+            <ignoreAzimuthAngleUp>0.7</ignoreAzimuthAngleUp>
+            <ignoreAzimuthAngleLow>-0.7</ignoreAzimuthAngleLow>
+            <ignoreScanIDUp>27</ignoreScanIDUp>
+            <ignoreScanIDLow>-1</ignoreScanIDLow>
           </plugin>
         </sensor>
       </xacro:unless>

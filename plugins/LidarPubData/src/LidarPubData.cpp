@@ -458,10 +458,13 @@ void GazeboRosVelodyneLaser::OnScan(ConstLaserScanStampedPtr& _msg)
         // if( (x<1.0&&x>-1.2) && (y<0.8&&y>-1.0) && (z<0.0&&z>-1.5) )
         //   continue;
         //剔除一定方位角范围的点
-        //水平方位角以绕Z轴由X轴转至Y轴为正方向，X轴正方向为起始，需要注意的是Gazebo仿真里面Lidar的角度以X轴负方向为起始
-        if(i>(ignoreAzimuthAngleUp_/360.0*rangeCount)||i<(ignoreAzimuthAngleLow_/360.0*rangeCount))
-          continue;
-        if(j>ignoreScanIDUp_||j<ignoreScanIDLow_)
+        //水平方位角以绕Z轴由X轴转至Y轴为正方向，X轴正方向为起始，需要注意的是Gazebo仿真里面Lidar的角度以X轴负方向为起始，第一个点云的水平方位角应该是-180度
+        // if((i<(ignoreAzimuthAngleUp_/360.0*rangeCount)&&i>(ignoreAzimuthAngleLow_/360.0*rangeCount))&&(j<ignoreScanIDUp_&&j>ignoreScanIDLow_))
+        //   continue;
+        // if(j>ignoreScanIDUp_||j<ignoreScanIDLow_)
+        //   continue;
+
+        if(((y<ignoreAzimuthAngleUp_)&&(y>ignoreAzimuthAngleLow_))&&(j<ignoreScanIDUp_&&j>ignoreScanIDLow_))
           continue;
 
         *((float*)(ptr + 0)) = x;
