@@ -30,7 +30,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://mars_rover/meshes/body.STL" />
+        <mesh filename="package://mars_rover/meshes/body.dae" />
       </geometry>
       <material name="">
         <color rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
@@ -39,7 +39,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://mars_rover/meshes/body.STL" />
+        <mesh filename="package://mars_rover/meshes/body.dae" />
       </geometry>
     </collision>
   </link>
