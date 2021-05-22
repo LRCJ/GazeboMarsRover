@@ -8,8 +8,9 @@ Panels:
         - /PointCloudGroup1
         - /PointCloudGroup1/featurePointCloud1/EdgePoints(red)1
         - /PointCloudGroup1/featurePointCloud1/unreliablePoints(green)1
+        - /Group1
       Splitter Ratio: 0.7349726557731628
-    Tree Height: 755
+    Tree Height: 483
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -29,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: RawPointCloud
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -1308,88 +1309,108 @@ Visualization Manager:
     - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
-      Enabled: false
+      Enabled: true
       Links:
         All Links Enabled: true
+        DiffBar:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
+        LeftFrontWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LeftMainRocket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LeftMiddleWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LeftRearWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LeftViceRocket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LiDAR:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LiDARBodyCon:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LiDARSupport:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Link Tree Style: Links in Alphabetic Order
+        RightFrontWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RightMainRocket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RightMiddleWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RightRearWheel:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RightViceRocket:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        body:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
-      Value: false
+      Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
-        DiffBar:
-          Value: true
-        LeftFrontWheel:
-          Value: true
-        LeftMainRocker:
-          Value: true
-        LeftMiddleWheel:
-          Value: true
-        LeftRearWheel:
-          Value: true
-        LeftViceRocker:
-          Value: true
-        LiDARBodyCon:
-          Value: true
-        LiDARSupport:
-          Value: true
-        PandarQT:
-          Value: true
-        RightFrontWheel:
-          Value: true
-        RightMainRocker:
-          Value: true
-        RightMiddleWheel:
-          Value: true
-        RightRearWheel:
-          Value: true
-        RightViceRocker:
-          Value: true
-        body:
-          Value: true
-        world:
-          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        world:
-          body:
-            DiffBar:
-              {}
-            LeftMainRocker:
-              LeftFrontWheel:
-                {}
-              LeftViceRocker:
-                LeftMiddleWheel:
-                  {}
-                LeftRearWheel:
-                  {}
-            LiDARBodyCon:
-              LiDARSupport:
-                PandarQT:
-                  {}
-            RightMainRocker:
-              RightFrontWheel:
-                {}
-              RightViceRocker:
-                RightMiddleWheel:
-                  {}
-                RightRearWheel:
-                  {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Alpha: 1
       Buffer Length: 1
       Class: rviz/Path
@@ -1445,6 +1466,59 @@ Visualization Manager:
       Topic: /imu_raw
       Unreliable: false
       Value: false
+    - Class: rviz/Group
+      Displays:
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 1
+          Name: world
+          Radius: 0.10000000149011612
+          Reference Frame: <Fixed Frame>
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: body
+          Radius: 0.029999999329447746
+          Reference Frame: body
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: LiDAR
+          Radius: 0.029999999329447746
+          Reference Frame: LiDAR
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: LeftMainRocket
+          Radius: 0.029999999329447746
+          Reference Frame: LeftMainRocket
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: LeftViceRocket
+          Radius: 0.029999999329447746
+          Reference Frame: LeftViceRocket
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: WLF
+          Radius: 0.029999999329447746
+          Reference Frame: LeftFrontWheel
+          Value: true
+        - Class: rviz/Axes
+          Enabled: true
+          Length: 0.30000001192092896
+          Name: WLR
+          Radius: 0.029999999329447746
+          Reference Frame: LeftRearWheel
+          Value: true
+      Enabled: true
+      Name: Group
   Enabled: true
   Global Options:
     Background Color: 255; 255; 255
@@ -1473,33 +1547,33 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 19.002344131469727
+      Distance: 2.489258289337158
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.6414986848831177
-        Y: -7.153280258178711
-        Z: 10.764220237731934
+        X: -1.1464356184005737
+        Y: 4.3141679763793945
+        Z: 0.7962073087692261
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.9347968697547913
+      Pitch: 0.5697972774505615
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.4104106426239014
+      Yaw: 1.9554063081741333
     Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1052
+  Height: 780
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000001700000037efc0200000008fb000000100044006900730070006c006100790073010000003d0000037e000000c900fffffffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000037efc0200000003fb0000000a00560069006500770073010000003d0000037e000000a400fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007800000003efc0100000002fb0000000800540069006d0065010000000000000780000002eb00fffffffb0000000800540069006d00650100000000000004500000000000000000000004f50000037e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000001700000026efc0200000008fb000000100044006900730070006c006100790073010000003d0000026e000000c900fffffffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000026efc0200000003fb0000000a00560069006500770073010000003d0000026e000000a400fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000005a00000003efc0100000002fb0000000800540069006d00650100000000000005a0000002eb00fffffffb0000000800540069006d00650100000000000004500000000000000000000003150000026e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -1508,6 +1582,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1920
-  X: 1920
+  Width: 1440
+  X: 203
   Y: 0

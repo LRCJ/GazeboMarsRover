@@ -1,47 +1,25 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
   <xacro:property name="mu" value="0.5" />
-	<gazebo reference="body">
-		<material>Gazebo/Gold</material>
-	</gazebo>
-	<gazebo reference="LeftMainRocker">
-		<material>Gazebo/Red</material>
-	</gazebo>
-	<gazebo reference="RightMainRocker">
-		<material>Gazebo/Red</material>
-	</gazebo>
-	<gazebo reference="LeftViceRocker">
-		<material>Gazebo/Blue</material>
-	</gazebo>
-	<gazebo reference="RightViceRocker">
-		<material>Gazebo/Blue</material>
-	</gazebo>
 	<gazebo reference="LeftFrontWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="LeftMiddleWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="LeftRearWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightFrontWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightMiddleWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="RightRearWheel">
-		<material>Gazebo/Grey</material>
 		<mu1>${mu}</mu1>
 	</gazebo>
 	<gazebo reference="DiffBar">
-		<material>Gazebo/Green</material>
 	</gazebo>
 	<gazebo reference="LiDARBodyCon">
 		<material>Gazebo/Grey</material>
@@ -52,17 +30,17 @@
 	<gazebo>
 		<!--LINKs-->
 	    <link name='LeftDiffBarLink'>
-	      <pose frame=''>-0.000408 -0.239999 -0.3 0 -0 0</pose>
+	      <pose frame=''>0 0.3 -0.54 0 -0 0</pose>
 	      <inertial>
-	        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
 	        <mass>0.200751</mass>
 	        <inertia>
-	          <ixx>1.70942e-05</ixx>
-	          <ixy>1.00927e-19</ixy>
-	          <ixz>4.58491e-19</ixz>
-	          <iyy>0.00141233</iyy>
-	          <iyz>1.74567e-10</iyz>
-	          <izz>0.00141234</izz>
+	          <ixx>1.7094E-05</ixx>
+	          <ixy>4.2541E-13</ixy>
+	          <ixz>4.7701E-20</ixz>
+	          <iyy>0.0014123</iyy>
+	          <iyz>-1.7457E-10</iyz>
+	          <izz>0.0014123</izz>
 	        </inertia>
 	      </inertial>
 	      <collision name='LeftDiffBarLink_collision'>
@@ -70,7 +48,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.dae</uri>
 	          </mesh>
 	        </geometry>
 	      </collision>
@@ -79,28 +57,23 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/LeftDiffBarLink.dae</uri>
 	          </mesh>
 	        </geometry>
-	        <material>
-	        	<script>
-	        		<name>Gazebo/DarkGrey</name>
-	        	</script>
-	        </material>
 	      </visual>
 	    </link>
 	    <link name='RightDiffBarLink'>
-	      <pose frame=''>-0.000421 -0.239999 0.3 0 -0 0</pose>
+	      <pose frame=''>0 -0.3 -0.54 0 -0 0</pose>
 	      <inertial>
-	        <pose frame=''>0.100845 0 0 0 -0 0</pose>
+	        <pose frame=''>0 0 0 0 -0 0</pose>
 	        <mass>0.200751</mass>
 	        <inertia>
-	          <ixx>1.70942e-05</ixx>
-	          <ixy>1.11353e-19</ixy>
-	          <ixz>-5.32414e-19</ixz>
-	          <iyy>0.00141234</iyy>
-	          <iyz>-2.61397e-10</iyz>
-	          <izz>0.00141233</izz>
+	          <ixx>1.7094E-05</ixx>
+	          <ixy>-4.2541E-13</ixy>
+	          <ixz>3.1651E-20</ixz>
+	          <iyy>0.0014123</iyy>
+	          <iyz>2.614E-10</iyz>
+	          <izz>0.0014123</izz>
 	        </inertia>
 	      </inertial>
 	      <collision name='RightDiffBarLink_collision'>
@@ -108,7 +81,7 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.dae</uri>
 	          </mesh>
 	        </geometry>
 	      </collision>
@@ -117,34 +90,29 @@
 	        <geometry>
 	          <mesh>
 	            <scale>1 1 1</scale>
-	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.STL</uri>
+	            <uri>/home/liaoren/Desktop/ROS_Learning/Gazebo_ROS/src/mars_rover/meshes/RightDiffBarLink.dae</uri>
 	          </mesh>
 	        </geometry>
-	        <material>
-	        	<script>
-	        		<name>Gazebo/DarkGrey</name>
-	        	</script>
-	        </material>
 	      </visual>
 	    </link>
 	    <!--JOINTs-->
 		<joint name="joint_LeftMainRocker_DiffBarLink" type="ball">
-			<parent>LeftMainRocker</parent>
+			<parent>LeftMainRocket</parent>
 			<child>LeftDiffBarLink</child>
 		</joint>
 		<joint name="joint_RightMainRocker_DiffBarLink" type="ball">
-			<parent>RightMainRocker</parent>
+			<parent>RightMainRocket</parent>
 			<child>RightDiffBarLink</child>
 		</joint>
 		<joint name="joint_DiffBar_LeftDiffBarLink" type="ball">
 			<parent>LeftDiffBarLink</parent>
 			<child>DiffBar</child>
-			<pose>0 -0.015 -0.3 0 0 0</pose>
+			<pose>0 0.3 -0.015 0 0 0</pose>
 		</joint>
 		<joint name="joint_DiffBar_RightDiffBarLink" type="ball">
 			<parent>RightDiffBarLink</parent>
 			<child>DiffBar</child>
-			<pose>0 -0.015 0.3 0 0 0</pose>
+			<pose>0 -0.3 -0.015  0 0 0</pose>
 		</joint>
 	</gazebo>
 
@@ -157,17 +125,17 @@
 
 		<!--this plugin publish topic '/joint_states'-->
 		<plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-			<jointName>joint_body_DiffBar,joint_body_LeftMainRocker,joint_LeftMainRocker_LeftViceRocker,joint_LeftViceRocker_LeftMiddleWheel,joint_LeftViceRocker_LeftRearWheel,joint_LeftMainRocker_LeftFrontWheel,joint_body_RightMainRocker,joint_RightMainRocker_RightViceRocker,joint_RightViceRocker_RightMiddleWheel,joint_RightViceRocker_RightRearWheel,joint_RightMainRocker_RightFrontWheel</jointName>
+			<jointName>joint_body_DiffBar,joint_body_LeftMainRocket,joint_LeftMainRocket_LeftViceRocket,joint_LeftViceRocket_LeftMiddleWheel,joint_LeftViceRocket_LeftRearWheel,joint_LeftMainRocket_LeftFrontWheel,joint_body_RightMainRocket,joint_RightMainRocket_RightViceRocket,joint_RightViceRocket_RightMiddleWheel,joint_RightViceRocket_RightRearWheel,joint_RightMainRocket_RightFrontWheel</jointName>
 			<updateRate>100.0</updateRate>
 		</plugin>
 
 		<!--this plugin drive rover's wheel for motion-->
 		<plugin name="skid_steer_drive_controller" filename="$(find mars_rover)/plugins/SkidSteerDrive/build/libSkidSteerDrive_plugins.so">
 			<updateRate>100.0</updateRate>
-			<leftFrontJoint>joint_LeftMainRocker_LeftFrontWheel</leftFrontJoint>
-			<rightFrontJoint>joint_RightMainRocker_RightFrontWheel</rightFrontJoint>
-			<leftRearJoint>joint_LeftViceRocker_LeftRearWheel</leftRearJoint>
-			<rightRearJoint>joint_RightViceRocker_RightRearWheel</rightRearJoint>
+			<leftFrontJoint>joint_LeftMainRocket_LeftFrontWheel</leftFrontJoint>
+			<rightFrontJoint>joint_RightMainRocket_RightFrontWheel</rightFrontJoint>
+			<leftRearJoint>joint_LeftViceRocket_LeftRearWheel</leftRearJoint>
+			<rightRearJoint>joint_RightViceRocket_RightRearWheel</rightRearJoint>
 			<wheelSeparation>1.08</wheelSeparation><!--wheel distance between L&R-->
 			<wheelDiameter>0.3</wheelDiameter>
 			<commandTopic>cmd_vel</commandTopic>

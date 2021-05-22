@@ -91,22 +91,22 @@ namespace gazebo
             {
                 case 0x44:
                 this->x_ = 0.0;
-                this->rot_ = rot__;
+                this->rot_ = -rot__;
                 ROS_INFO("TurnLeft!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x43:
                 this->x_ = 0.0;
-                this->rot_ = -rot__;
+                this->rot_ = rot__;
                 ROS_INFO("TurnRight!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x41:
                 ROS_DEBUG("UP");
-                this->x_ = x__;
+                this->x_ = -x__;
                 this->rot_ = 0.0;
                 ROS_INFO("Forward!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
                 case 0x42:
-                this->x_ = -x__;
+                this->x_ = x__;
                 this->rot_ = 0.0;
                 ROS_INFO("BackOff!!!Linear Speed:%.4lfm/s,Rotation Speed:%.4lfrad/s!",this->x_,this->rot_);
                 break;
@@ -150,8 +150,8 @@ namespace gazebo
                     //ROS_INFO("read XBOX input failed!");
                     break;
                 }
-                this->x_ = map.ly/-32767.0*x__;
-                this->rot_ = map.rx/-32767.0*rot__;
+                this->x_ = map.ly/32767.0*x__;
+                this->rot_ = map.rx/32767.0*rot__;
             }
         }
         xbox_close(xbox_fd);
@@ -409,9 +409,12 @@ namespace gazebo
             // //30度
             // T_bp_.rotate(Eigen::Quaterniond(0.683, -0.683, 0.183, -0.183));
             // T_bp_.pretranslate(Eigen::Vector3d(.677, 0.370, 0.000));
-            //65度
-            T_bp_.rotate(Eigen::Quaterniond(0.596, -0.596, 0.380, -0.380));
-            T_bp_.pretranslate(Eigen::Vector3d(0.716, 0.361, 0.000));
+            // //65度
+            // T_bp_.rotate(Eigen::Quaterniond(0.596, -0.596, 0.380, -0.380));
+            // T_bp_.pretranslate(Eigen::Vector3d(0.716, 0.361, 0.000));
+            //65度，修正坐标系后
+            T_bp_.rotate(Eigen::Quaterniond(0.843, 0.000, 0.537, 0.000));
+            T_bp_.pretranslate(Eigen::Vector3d(0.716, 0.000, 0.061));
         }
     }
 
@@ -466,8 +469,8 @@ namespace gazebo
         wheel_speed_[RIGHT_FRONT] = vr + va * wheel_separation_ / 2.0;
         wheel_speed_[RIGHT_REAR] = vr + va * wheel_separation_ / 2.0;
 
-        wheel_speed_[LEFT_FRONT] = vr - va * wheel_separation_ / 2.0;
-        wheel_speed_[LEFT_REAR] = vr - va * wheel_separation_ / 2.0;
+        wheel_speed_[LEFT_FRONT] = -(vr - va * wheel_separation_ / 2.0);
+        wheel_speed_[LEFT_REAR] = -(vr - va * wheel_separation_ / 2.0);
     }
 
     void GazeboRosSkidSteerDrive::cmdVelCallback(const geometry_msgs::Twist::ConstPtr& cmd_msg)
